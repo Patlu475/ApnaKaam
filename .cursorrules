@@ -1,0 +1,252 @@
+# Inventory SaaS - Cursor AI Rules
+
+## Project Overview
+You are building a scalable Inventory & Sales Tracker SaaS for home-based sellers with WhatsApp/Telegram chat integration. This is an enterprise-level application using Next.js 14, Supabase, TypeScript, and Tailwind CSS.
+
+## Tech Stack
+- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS, shadcn/ui
+- **Backend**: Supabase (PostgreSQL, Auth, Real-time, Storage)
+- **Authentication**: Clerk or Supabase Auth
+- **Chat Integration**: WhatsApp Business API, Telegram Bot API
+- **Deployment**: Vercel
+- **Database**: PostgreSQL with Row Level Security (RLS)
+
+## Project Structure
+```
+src/
+├── app/                    # Next.js 14 App Router
+│   ├── (auth)/            # Auth group routes
+│   ├── (dashboard)/       # Protected dashboard routes
+│   ├── api/               # API routes for webhooks
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── ui/                # shadcn/ui components
+│   ├── dashboard/         # Dashboard-specific components
+│   ├── inventory/         # Inventory management components
+│   ├── chat/              # Chat integration components
+│   └── layout/            # Layout components
+├── lib/
+│   ├── supabase/          # Supabase client and utilities
+│   ├── validations/       # Zod schemas
+│   ├── hooks/             # Custom React hooks
+│   ├── utils/             # Utility functions
+│   └── constants.ts       # App constants
+├── types/
+│   ├── database.ts        # Generated Supabase types
+│   └── index.ts           # Custom types
+└── middleware.ts          # Auth middleware
+```
+
+## Database Schema (Core Tables)
+```sql
+-- profiles: User profile data extending Supabase auth
+-- products: Inventory items with stock tracking
+-- transactions: All sales/restock/adjustment records
+-- chat_integrations: WhatsApp/Telegram connection data
+```
+
+## Coding Standards
+
+### TypeScript
+- Use strict TypeScript configuration
+- Define interfaces for all data structures
+- Use Zod for runtime validation
+- Prefer type inference when possible
+- Use database types from Supabase codegen
+
+### React/Next.js
+- Use App Router exclusively (no Pages Router)
+- Prefer Server Components when possible
+- Use Client Components only when necessary (interactivity, hooks, browser APIs)
+- Implement proper error boundaries
+- Use React 18 features (Suspense, concurrent features)
+
+### Supabase Integration
+- Always use Row Level Security (RLS) policies
+- Use database functions for complex operations
+- Implement real-time subscriptions for live updates
+- Use proper error handling for all database operations
+- Follow Supabase naming conventions (snake_case for database)
+
+### Component Architecture
+- Use functional components with hooks
+- Implement proper prop types with TypeScript
+- Use composition over inheritance
+- Keep components small and focused
+- Use custom hooks for reusable logic
+
+### Styling
+- Use Tailwind CSS utility classes
+- Follow mobile-first responsive design
+- Use shadcn/ui components as base
+- Maintain consistent design system
+- Use CSS variables for theming
+
+### Performance
+- Implement proper loading states
+- Use React Suspense for data fetching
+- Optimize database queries with proper indexes
+- Implement pagination for large datasets
+- Use proper image optimization
+
+### Security
+- Validate all inputs with Zod schemas
+- Implement rate limiting on API routes
+- Use RLS for data isolation
+- Sanitize user inputs
+- Follow OWASP security guidelines
+
+## File Naming Conventions
+- Components: PascalCase (ProductCard.tsx)
+- Hooks: camelCase with 'use' prefix (useInventory.ts)
+- Utilities: camelCase (formatCurrency.ts)
+- Constants: UPPER_SNAKE_CASE (MAX_PRODUCTS_FREE)
+- API routes: kebab-case (process-sale.ts)
+
+## Code Examples
+
+### Database Query Pattern
+```typescript
+export async function getProducts(userId: string) {
+  const supabase = createServerClient()
+  
+  const { data, error } = await supabase
+    .from('products')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('is_active', true)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching products:', error)
+    throw new Error('Failed to fetch products')
+  }
+
+  return data
+}
+```
+
+### Component Pattern
+```typescript
+interface ProductCardProps {
+  product: Database['public']['Tables']['products']['Row']
+  onUpdate?: (id: string) => void
+}
+
+export function ProductCard({ product, onUpdate }: ProductCardProps) {
+  // Component implementation
+}
+```
+
+### Custom Hook Pattern
+```typescript
+export function useInventory(userId: string) {
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  // Hook implementation with proper error handling
+}
+```
+
+### API Route Pattern
+```typescript
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+    const validatedData = schema.parse(body)
+    
+    // Process request
+    
+    return NextResponse.json({ success: true, data: result })
+  } catch (error) {
+    console.error('API Error:', error)
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+}
+```
+
+## Key Features to Implement
+
+### Core Inventory Management
+- Product CRUD operations
+- Stock level tracking
+- Low stock alerts
+- Category and tag management
+- Image upload and management
+
+### Transaction Processing
+- Sales logging (manual and automated)
+- Restock recording
+- Inventory adjustments
+- Transaction history
+- Atomic operations using database functions
+
+### Chat Integration
+- WhatsApp Business API webhook handling
+- Telegram Bot API integration
+- Command parsing ("Sold 3 Honey")
+- Natural language processing for commands
+- Response formatting and sending
+
+### Analytics & Reporting
+- Sales dashboard with charts
+- Inventory insights
+- Low stock monitoring
+- Export functionality (CSV)
+- Performance metrics
+
+### Real-time Features
+- Live inventory updates
+- Real-time notifications
+- WebSocket connections
+- Optimistic UI updates
+
+### User Management
+- Multi-tenant architecture
+- Plan-based feature limits
+- User preferences
+- Account management
+
+## Error Handling Patterns
+- Use try-catch blocks for async operations
+- Implement proper error boundaries in React
+- Log errors appropriately (console.error for development)
+- Show user-friendly error messages
+- Handle network failures gracefully
+
+## Testing Strategy
+- Unit tests for utility functions
+- Integration tests for API routes
+- Component tests for complex UI logic
+- E2E tests for critical user journeys
+- Database function testing
+
+## Performance Considerations
+- Use React.memo for expensive components
+- Implement proper pagination
+- Use database indexes for frequent queries
+- Optimize image loading and storage
+- Monitor and optimize bundle size
+
+## Security Requirements
+- Implement rate limiting on all API endpoints
+- Validate all user inputs
+- Use RLS policies for data access control
+- Sanitize data before database operations
+- Implement proper session management
+
+## Deployment Checklist
+- Environment variables properly configured
+- Database migrations applied
+- RLS policies enabled and tested
+- API endpoints secured
+- Error monitoring configured
+- Performance monitoring setup
+
+Remember: This is an enterprise-level application that needs to scale. Prioritize code quality, security, and performance from the beginning. Always consider the user experience and business requirements when making technical decisions.

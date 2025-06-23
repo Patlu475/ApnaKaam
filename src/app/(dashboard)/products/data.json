@@ -1,0 +1,42 @@
+[
+  {
+    "id": "1",
+    "name": "Product A",
+    "price": 19.99,
+    "quantity": 56,
+    "category": "Electronics",
+    "status": "In Stock"
+  },
+  {
+    "id": "2",
+    "name": "Product B",
+    "price": 29.99,
+    "quantity": 23,
+    "category": "Home Goods",
+    "status": "In Stock"
+  },
+  {
+    "id": "3",
+    "name": "Product C",
+    "price": 9.99,
+    "quantity": 12,
+    "category": "Accessories",
+    "status": "Low Stock"
+  },
+  {
+    "id": "4",
+    "name": "Product D",
+    "price": 39.99,
+    "quantity": 78,
+    "category": "Electronics",
+    "status": "In Stock"
+  },
+  {
+    "id": "5",
+    "name": "Product E",
+    "price": 59.99,
+    "quantity": 0,
+    "category": "Accessories",
+    "status": "Out of Stock"
+  }
+]
