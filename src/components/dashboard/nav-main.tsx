@@ -8,7 +8,8 @@ import {
   IconPackages,
   IconSettings,
   IconShoppingCart,
-  IconRobot
+  IconRobot,
+  IconUserCheck
 } from "@tabler/icons-react"
 
 import {
@@ -52,7 +53,11 @@ export function NavMain({ className, items, ...props }: NavMainProps) {
       url: "/chatbot",
       icon: IconRobot,
     },
-    
+    {
+      title: "Auth Test",
+      url: "/test-auth",
+      icon: IconUserCheck,
+    },
   ]
   
   return (

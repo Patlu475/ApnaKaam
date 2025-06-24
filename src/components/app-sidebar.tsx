@@ -5,6 +5,7 @@ import Link from "next/link"
 import {
   IconPackage
 } from "@tabler/icons-react"
+import { useUser } from "@clerk/nextjs"
 
 import { NavMain } from "@/components/dashboard/nav-main"
 import { NavUser } from "@/components/dashboard/nav-user"
@@ -18,15 +19,16 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-const data = {
-  user: {
-    name: "Admin User",
-    email: "admin@example.com",
-    avatar: "/avatars/user.jpg",
-  }
-}
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { user, isLoaded } = useUser();
+  
+  // Default fallback data in case user is not loaded yet
+  const userData = {
+    name: user?.fullName || user?.firstName || "User",
+    email: user?.primaryEmailAddress?.emailAddress || "user@example.com",
+    avatar: user?.imageUrl || "/avatars/user.jpg",
+  }
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -49,7 +51,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
        
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={userData} />
       </SidebarFooter>
     </Sidebar>
   )
