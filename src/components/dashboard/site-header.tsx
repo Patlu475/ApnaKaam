@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { UserButton } from "@clerk/nextjs"
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card"
+import { Code, Info } from "lucide-react"
 
 export function SiteHeader() {
   return (
@@ -14,7 +15,31 @@ export function SiteHeader() {
         />
         <h1 className="text-base font-medium">Dashboard</h1>
         <div className="ml-auto flex items-center gap-2">
-          <UserButton afterSignOutUrl="/sign-in" />
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <Info className="h-5 w-5" />
+                <span className="sr-only">Creator Info</span>
+              </Button>
+            </HoverCardTrigger>
+            <HoverCardContent align="end" className="w-80">
+              <div className="flex justify-between space-y-1">
+                <div className="space-y-1">
+                  <h4 className="text-sm font-semibold">Creator</h4>
+                  <div className="flex items-center pt-2">
+                    <div className="rounded-full bg-primary/10 p-2 mr-2">
+                      <Code className="h-4 w-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium leading-none">patlu475</p>
+                      <p className="text-sm text-muted-foreground">Apna Kaam Founder</p>
+                      <p className="text-xs text-muted-foreground mt-1">SaaS Developer</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </HoverCardContent>
+          </HoverCard>
         </div>
       </div>
     </header>

@@ -76,9 +76,9 @@ const Products = () => {
       {/* Header with site header that includes UserButton */}
       <SiteHeader />
       
-      <div className="@container/main flex flex-1 flex-col gap-2 p-4 lg:p-6">
+      <div className="@container/main flex flex-1 flex-col pt-2">
         {/* Title and Actions */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 px-4 lg:px-6">
           <div>
             <h1 className="text-2xl font-bold">Inventory</h1>
             <p className="text-muted-foreground mt-1">Manage your product inventory and stock levels</p>
@@ -109,12 +109,14 @@ const Products = () => {
         </div>
 
         {/* Products Table */}
-        <ProductsTable 
-          products={filteredProducts}
-          onDelete={handleDeleteProduct}
-          onEdit={handleEditProduct}
-          isLoading={isLoading}
-        />
+        <div className="px-4 lg:px-6">
+          <ProductsTable 
+            products={filteredProducts}
+            onDelete={handleDeleteProduct}
+            onEdit={handleEditProduct}
+            isLoading={isLoading}
+          />
+        </div>
 
         {/* Add Product Sheet */}
         <AddProductSheet

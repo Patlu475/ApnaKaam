@@ -1,4 +1,4 @@
-import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react"
+import { AlertTriangle, Package, Boxes, Grid } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import {
@@ -15,86 +15,90 @@ export function SectionCards() {
     <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Total Revenue</CardDescription>
+          <CardDescription>Critical Alerts</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
+            3
           </CardTitle>
           <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +12.5%
+            <Badge className="bg-red-100 text-red-800 hover:bg-red-200" variant="outline">
+              <AlertTriangle className="h-3.5 w-3.5 mr-1" />
+              Urgent
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month <IconTrendingUp className="size-4" />
+            Items require immediate attention
           </div>
           <div className="text-muted-foreground">
-            Visitors for the last 6 months
+            3 products below critical threshold
           </div>
         </CardFooter>
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>New Customers</CardDescription>
+          <CardDescription>Low Stock Items</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            1,234
+            8
           </CardTitle>
           <CardAction>
-            <Badge variant="outline">
-              <IconTrendingDown />
-              -20%
+            <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-200" variant="outline">
+              <AlertTriangle className="h-3.5 w-3.5 mr-1" />
+              Warning
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Down 20% this period <IconTrendingDown className="size-4" />
+            Items approaching minimum levels
           </div>
           <div className="text-muted-foreground">
-            Acquisition needs attention
+            Consider restocking these products soon
           </div>
         </CardFooter>
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Active Accounts</CardDescription>
+          <CardDescription>Total Products</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            45,678
+            42
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
-              <IconTrendingUp />
-              +12.5%
+              <Package className="h-3.5 w-3.5 mr-1" />
+              Active
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Strong user retention <IconTrendingUp className="size-4" />
+            All inventory items
           </div>
-          <div className="text-muted-foreground">Engagement exceed targets</div>
+          <div className="text-muted-foreground">
+            42 products currently in inventory
+          </div>
         </CardFooter>
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Growth Rate</CardDescription>
+          <CardDescription>Categories</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            4.5%
+            6
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
-              <IconTrendingUp />
-              +4.5%
+              <Grid className="h-3.5 w-3.5 mr-1" />
+              Groups
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Steady performance increase <IconTrendingUp className="size-4" />
+            Product categorization
           </div>
-          <div className="text-muted-foreground">Meets growth projections</div>
+          <div className="text-muted-foreground">
+            Electronics, Furniture, Clothing, etc.
+          </div>
         </CardFooter>
       </Card>
     </div>

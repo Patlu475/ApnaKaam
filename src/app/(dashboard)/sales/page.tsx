@@ -202,9 +202,9 @@ const SalesLog = () => {
       {/* Header with site header that includes UserButton */}
       <SiteHeader />
       
-      <div className="@container/main flex flex-1 flex-col gap-2 p-4 lg:p-6">
+      <div className="@container/main flex flex-1 flex-col pt-2">
         {/* Title and Controls */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 px-4 lg:px-6">
           <div>
             <h1 className="text-2xl font-bold">Sales Log</h1>
             <p className="text-muted-foreground mt-1">Track and manage your inventory transactions</p>
@@ -218,44 +218,46 @@ const SalesLog = () => {
         </div>
 
         {/* Sales Table */}
-        <div className="overflow-hidden rounded-lg border">
-          {salesLoading ? (
-            <div className="flex items-center justify-center p-8">
-              <Loader2 className="h-6 w-6 animate-spin mr-2" />
-              <span>Loading sales data...</span>
-            </div>
-          ) : (
-            <>
-              {paginatedSales.length === 0 && salesData.length > 0 && (
-                <div className="text-center p-8">
-                  <p className="text-muted-foreground">No matching sales found for your filters.</p>
-                  <Button
-                    variant="link" 
-                    onClick={() => {
-                      setSearchTerm('');
-                      setDateRange({ from: null, to: null });
-                    }}
-                  >
-                    Clear filters
-                  </Button>
-                </div>
-              )}
-              {salesData.length === 0 && (
-                <div className="text-center p-8">
-                  <p className="text-muted-foreground mb-2">No sales records found.</p>
-                  <Button onClick={hardRefresh} variant="outline" size="sm">
-                    <RefreshCw className="h-4 w-4 mr-2" />
-                    Refresh Data
-                  </Button>
-                </div>
-              )}
-              {paginatedSales.length > 0 && <SalesTable data={paginatedSales} />}
-            </>
-          )}
+        <div className="px-4 lg:px-6">
+          <div className="overflow-hidden rounded-lg border">
+            {salesLoading ? (
+              <div className="flex items-center justify-center p-8">
+                <Loader2 className="h-6 w-6 animate-spin mr-2" />
+                <span>Loading sales data...</span>
+              </div>
+            ) : (
+              <>
+                {paginatedSales.length === 0 && salesData.length > 0 && (
+                  <div className="text-center p-8">
+                    <p className="text-muted-foreground">No matching sales found for your filters.</p>
+                    <Button
+                      variant="link" 
+                      onClick={() => {
+                        setSearchTerm('');
+                        setDateRange({ from: null, to: null });
+                      }}
+                    >
+                      Clear filters
+                    </Button>
+                  </div>
+                )}
+                {salesData.length === 0 && (
+                  <div className="text-center p-8">
+                    <p className="text-muted-foreground mb-2">No sales records found.</p>
+                    <Button onClick={hardRefresh} variant="outline" size="sm">
+                      <RefreshCw className="h-4 w-4 mr-2" />
+                      Refresh Data
+                    </Button>
+                  </div>
+                )}
+                {paginatedSales.length > 0 && <SalesTable data={paginatedSales} />}
+              </>
+            )}
+          </div>
         </div>
 
         {/* Pagination */}
-        <div className="mt-6 flex justify-between items-center">
+        <div className="mt-6 flex justify-between items-center px-4 lg:px-6">
           <DataPagination 
             currentPage={currentPage}
             pageCount={Math.max(1, Math.ceil(filteredSales.length / pageSize))}

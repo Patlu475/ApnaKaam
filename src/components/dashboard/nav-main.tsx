@@ -52,12 +52,7 @@ export function NavMain({ className, items, ...props }: NavMainProps) {
       title: "Chatbot",
       url: "/chatbot",
       icon: IconRobot,
-    },
-    {
-      title: "Auth Test",
-      url: "/test-auth",
-      icon: IconUserCheck,
-    },
+    }
   ]
   
   return (
