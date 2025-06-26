@@ -17,15 +17,21 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { X } from 'lucide-react';
+import { ImageUpload } from '@/components/ui/image-upload';
+import { Textarea } from '@/components/ui/textarea';
 
 interface Product {
   id: number;
   name: string;
   quantity: number;
   price: number;
-  threshold: number;
-  lastUpdated: Date;
+  cost?: number;
+  lowStockThreshold: number;
   tags: string[];
+  imageUrl?: string | null;
+  description?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface EditProductDialogProps {
@@ -45,10 +51,13 @@ const EditProductDialog: React.FC<EditProductDialogProps> = ({
     name: '',
     quantity: '',
     price: '',
+    cost: '',
     threshold: '',
+    description: '',
   });
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState('');
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -57,9 +66,12 @@ const EditProductDialog: React.FC<EditProductDialogProps> = ({
         name: product.name,
         quantity: product.quantity.toString(),
         price: product.price.toString(),
-        threshold: product.threshold.toString(),
+        cost: product.cost?.toString() || '',
+        threshold: product.lowStockThreshold.toString(),
+        description: product.description || '',
       });
       setTags(product.tags || []);
+      setImageUrl(product.imageUrl || null);
     }
   }, [product]);
 
@@ -74,8 +86,11 @@ const EditProductDialog: React.FC<EditProductDialogProps> = ({
       name: formData.name,
       quantity: parseInt(formData.quantity),
       price: parseFloat(formData.price),
-      threshold: parseInt(formData.threshold),
+      cost: formData.cost ? parseFloat(formData.cost) : undefined,
+      lowStockThreshold: parseInt(formData.threshold),
       tags: tags,
+      imageUrl: imageUrl,
+      description: formData.description || undefined,
     });
   };
 
@@ -106,6 +121,15 @@ const EditProductDialog: React.FC<EditProductDialogProps> = ({
         
         <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+            {/* Image Upload */}
+            <div className="flex flex-col gap-3">
+              <Label>Product Image</Label>
+              <ImageUpload onImageChange={setImageUrl} />
+              {imageUrl && <input type="hidden" value={imageUrl} />}
+            </div>
+
+            <Separator />
+            
             <div className="flex flex-col gap-3">
               <Label htmlFor="edit-name">Product Name</Label>
               <Input
@@ -145,17 +169,44 @@ const EditProductDialog: React.FC<EditProductDialogProps> = ({
               </div>
             </div>
 
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-3">
+                <Label htmlFor="edit-price">Price (PKR)</Label>
+                <Input
+                  id="edit-price"
+                  type="number"
+                  value={formData.price}
+                  onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <Label htmlFor="edit-cost">Cost (PKR)</Label>
+                <Input
+                  id="edit-cost"
+                  type="number"
+                  value={formData.cost}
+                  onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                />
+              </div>
+            </div>
+
             <div className="flex flex-col gap-3">
-              <Label htmlFor="edit-price">Price (PKR)</Label>
-              <Input
-                id="edit-price"
-                type="number"
-                value={formData.price}
-                onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                placeholder="0.00"
-                min="0"
-                step="0.01"
-                required
+              <Label htmlFor="edit-description">Description</Label>
+              <Textarea
+                id="edit-description"
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                placeholder="Enter product description (optional)"
+                className="resize-none"
+                rows={3}
               />
             </div>
             

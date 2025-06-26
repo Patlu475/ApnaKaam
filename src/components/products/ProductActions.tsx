@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { MoreHorizontal, Edit, Trash2 } from 'lucide-react';
 import {
@@ -25,9 +24,12 @@ interface Product {
   name: string;
   quantity: number;
   price: number;
-  threshold: number;
-  lastUpdated: Date;
+  cost?: number;
+  lowStockThreshold: number;
   tags: string[];
+  imageUrl?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface ProductActionsProps {

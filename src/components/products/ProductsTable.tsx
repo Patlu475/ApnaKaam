@@ -1,5 +1,5 @@
-import React, { useState, useId } from 'react';
-import { ChevronDown, ChevronUp, Package, AlertTriangle, GripVertical, CheckCircle } from 'lucide-react';
+import React, { useState, useId, useEffect } from 'react';
+import { ChevronDown, ChevronUp, Package, AlertTriangle, GripVertical, CheckCircle, Loader2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import {
   closestCenter,
@@ -39,18 +39,22 @@ interface Product {
   name: string;
   quantity: number;
   price: number;
-  threshold: number;
-  lastUpdated: Date;
+  cost?: number;
+  lowStockThreshold: number;
   tags: string[];
+  imageUrl?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface ProductsTableProps {
   products: Product[];
   onDelete: (id: number) => void;
   onEdit: (id: number, product: any) => void;
+  isLoading?: boolean;
 }
 
-type SortField = 'name' | 'quantity' | 'price' | 'lastUpdated';
+type SortField = 'name' | 'quantity' | 'price' | 'updatedAt';
 type SortDirection = 'asc' | 'desc';
 
 // Create a separate component for the drag handle
@@ -100,10 +104,19 @@ function DraggableRow({ product, lowStock, formatPrice, onEdit, onDelete }: {
       </TableCell>
       <TableCell className="py-3">
         <div className="flex items-center gap-3">
+          {product.imageUrl && (
+            <div className="h-10 w-10 rounded-md overflow-hidden flex-shrink-0">
+              <img 
+                src={product.imageUrl} 
+                alt={product.name} 
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
           <div className="flex-1">
             <div className="font-medium">{product.name}</div>
             <div className="flex flex-wrap gap-1 mt-1">
-              {product.tags.map((tag) => (
+              {product.tags && product.tags.map((tag) => (
                 <Badge key={tag} variant="outline" className="text-muted-foreground px-1.5">
                   {tag}
                 </Badge>
@@ -130,12 +143,12 @@ function DraggableRow({ product, lowStock, formatPrice, onEdit, onDelete }: {
       <TableCell>
         <Badge variant="outline" className="text-muted-foreground px-1.5">
           {lowStock && <AlertTriangle className="mr-1 h-3.5 w-3.5 text-destructive" />}
-          {product.threshold}
+          {product.lowStockThreshold}
         </Badge>
       </TableCell>
       <TableCell>
         <span className="text-sm text-muted-foreground">
-          {formatDistanceToNow(product.lastUpdated, { addSuffix: true })}
+          {formatDistanceToNow(new Date(product.updatedAt), { addSuffix: true })}
         </span>
       </TableCell>
       <TableCell>
@@ -149,13 +162,18 @@ function DraggableRow({ product, lowStock, formatPrice, onEdit, onDelete }: {
   );
 }
 
-const ProductsTable: React.FC<ProductsTableProps> = ({ products, onDelete, onEdit }) => {
+const ProductsTable: React.FC<ProductsTableProps> = ({ products, onDelete, onEdit, isLoading = false }) => {
   const [productItems, setProductItems] = useState([...products]);
-  const [sortField, setSortField] = useState<SortField>('lastUpdated');
+  const [sortField, setSortField] = useState<SortField>('updatedAt');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const sortableId = useId();
+  
+  // Update local state when products change
+  useEffect(() => {
+    setProductItems(products);
+  }, [products]);
   
   const sensors = useSensors(
     useSensor(MouseSensor, {}),
@@ -181,7 +199,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products, onDelete, onEdi
     let aValue = a[sortField];
     let bValue = b[sortField];
     
-    if (sortField === 'lastUpdated') {
+    if (sortField === 'updatedAt') {
       aValue = new Date(aValue as Date).getTime();
       bValue = new Date(bValue as Date).getTime();
     }
@@ -226,6 +244,18 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products, onDelete, onEdi
         return arrayMove(items, oldIndex, newIndex);
       });
     }
+  }
+
+  if (isLoading) {
+    return (
+      <Card className="p-12 text-center">
+        <div className="flex flex-col items-center justify-center">
+          <Loader2 className="h-12 w-12 text-muted-foreground mx-auto mb-4 animate-spin" />
+          <h3 className="text-lg font-medium mb-2">Loading products...</h3>
+          <p className="text-muted-foreground">Please wait while we fetch your inventory data.</p>
+        </div>
+      </Card>
+    );
   }
 
   if (products.length === 0) {
@@ -282,11 +312,11 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products, onDelete, onEdi
                 <TableHead className="w-28">Threshold</TableHead>
                 <TableHead 
                   className="cursor-pointer select-none hover:bg-muted/80 transition-colors w-36"
-                  onClick={() => handleSort('lastUpdated')}
+                  onClick={() => handleSort('updatedAt')}
                 >
                   <div className="flex items-center gap-2">
                     Last Updated
-                    <SortIcon field="lastUpdated" />
+                    <SortIcon field="updatedAt" />
                   </div>
                 </TableHead>
                 <TableHead className="w-10"></TableHead>
@@ -298,7 +328,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products, onDelete, onEdi
                 strategy={verticalListSortingStrategy}
               >
                 {paginatedProducts.map((product) => {
-                  const lowStock = isLowStock(product.quantity, product.threshold);
+                  const lowStock = isLowStock(product.quantity, product.lowStockThreshold);
                   return (
                     <DraggableRow 
                       key={product.id}

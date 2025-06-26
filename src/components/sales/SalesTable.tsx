@@ -40,6 +40,7 @@ import { Button } from '@/components/ui/button';
 
 interface SaleData {
   id: number;
+  productId: number;
   productName: string;
   quantity: number;
   type: 'sale' | 'restock';
@@ -242,7 +243,12 @@ export const SalesTable: React.FC<SalesTableProps> = ({ data: initialData }) => 
                     colSpan={7}
                     className="h-24 text-center"
                   >
-                    No results.
+                    <div className="flex flex-col items-center justify-center">
+                      <p className="mb-2">No sales records found.</p>
+                      <p className="text-muted-foreground text-sm">
+                        Log your first sale or try refreshing the page.
+                      </p>
+                    </div>
                   </TableCell>
                 </TableRow>
               )}

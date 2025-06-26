@@ -18,6 +18,9 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { X } from 'lucide-react';
+import { ImageUpload } from '@/components/ui/image-upload';
+import { createProduct } from '@/app/api/products/route';
+import { useToast } from '@/hooks/use-sonner';
 
 interface AddProductSheetProps {
   open: boolean;
@@ -34,32 +37,58 @@ const AddProductSheet: React.FC<AddProductSheetProps> = ({
     name: '',
     quantity: '',
     price: '',
+    cost: '',
     threshold: '',
   });
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState('');
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const isMobile = useIsMobile();
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.name || !formData.quantity || !formData.price || !formData.threshold) {
+      toast.error("Error");
       return;
     }
 
-    onAddProduct({
-      name: formData.name,
-      quantity: parseInt(formData.quantity),
-      price: parseFloat(formData.price),
-      threshold: parseInt(formData.threshold),
-      tags: tags,
-    });
+    setIsSubmitting(true);
+    
+    try {
+      // Create FormData to send to server action
+      const productFormData = new FormData();
+      productFormData.append('name', formData.name);
+      productFormData.append('quantity', formData.quantity);
+      productFormData.append('price', formData.price);
+      productFormData.append('cost', formData.cost || '0');
+      productFormData.append('lowStockThreshold', formData.threshold);
+      productFormData.append('tags', tags.join(','));
+      if (imageUrl) productFormData.append('imageUrl', imageUrl);
 
-    // Reset form
-    setFormData({ name: '', quantity: '', price: '', threshold: '' });
-    setTags([]);
-    setTagInput('');
-    onOpenChange(false);
+      // Call server action
+      const newProduct = await createProduct(productFormData);
+      
+      // Update local state with new product
+      onAddProduct(newProduct);
+      
+      // Show success toast
+      toast.success("Product Added Successfully", `${formData.name} has been added to your inventory.`);
+      
+      // Reset form
+      setFormData({ name: '', quantity: '', price: '', cost: '', threshold: '' });
+      setTags([]);
+      setTagInput('');
+      setImageUrl(null);
+      onOpenChange(false);
+    } catch (error) {
+      console.error('Error adding product:', error);
+      toast.error("Error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleAddTag = (e: React.KeyboardEvent) => {
@@ -89,6 +118,14 @@ const AddProductSheet: React.FC<AddProductSheetProps> = ({
         
         <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+            {/* Image Upload */}
+            <div className="flex flex-col gap-3">
+              <Label>Product Image</Label>
+              <ImageUpload onImageChange={setImageUrl} />
+            </div>
+
+            <Separator />
+
             <div className="flex flex-col gap-3">
               <Label htmlFor="name">Product Name</Label>
               <Input
@@ -128,18 +165,33 @@ const AddProductSheet: React.FC<AddProductSheetProps> = ({
               </div>
             </div>
 
-            <div className="flex flex-col gap-3">
-              <Label htmlFor="price">Price (PKR)</Label>
-              <Input
-                id="price"
-                type="number"
-                value={formData.price}
-                onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                placeholder="0.00"
-                min="0"
-                step="0.01"
-                required
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-3">
+                <Label htmlFor="price">Price (PKR)</Label>
+                <Input
+                  id="price"
+                  type="number"
+                  value={formData.price}
+                  onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <Label htmlFor="cost">Cost (PKR)</Label>
+                <Input
+                  id="cost"
+                  type="number"
+                  value={formData.cost}
+                  onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                />
+              </div>
             </div>
 
             <Separator />
@@ -170,7 +222,13 @@ const AddProductSheet: React.FC<AddProductSheetProps> = ({
           </form>
         </div>
         <DrawerFooter>
-          <Button type="submit" onClick={handleSubmit}>Add Product</Button>
+          <Button 
+            type="submit" 
+            onClick={handleSubmit} 
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Adding...' : 'Add Product'}
+          </Button>
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>

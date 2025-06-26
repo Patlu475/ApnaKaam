@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl=env("DIRECT_URL")
+}
+
+
+model User {
+  userId        String    @id             // Clerk user ID (e.g. "user_abc123")
+  email     String    @unique
+  name      String?
+  products  Product[]
+  sales     Sale[]
+  alerts    Alert[]
+  plans     Plan[]
+  chatAccounts ChatAccount[]
+  createdAt DateTime  @default(now())
+}
+
+model Product {
+  id                Int       @id @default(autoincrement())
+  userId            String
+  user              User      @relation(fields: [userId], references: [userId])
+  name              String
+  description       String?
+  quantity          Int       @default(0)
+  price             Int       // in cents or smallest unit
+  cost              Int       // cost price
+  lowStockThreshold Int       @default(5)
+  tags              String[]  @default([])
+  imageUrl          String?
+  sales             Sale[]
+  alerts            Alert[]
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model Sale {
+  id         Int       @id @default(autoincrement())
+  userId     String
+  productId  Int
+  user       User      @relation(fields: [userId], references: [userId])
+  product    Product   @relation(fields: [productId], references: [id])
+  quantity   Int
+  type       SaleType
+  note       String?
+  createdAt  DateTime  @default(now())
+}
+
+enum SaleType {
+  sale
+  restock
+}
+
+model Alert {
+  id          Int       @id @default(autoincrement())
+  userId      String
+  productId   Int
+  user        User      @relation(fields: [userId], references: [userId])
+  product     Product   @relation(fields: [productId], references: [id])
+  resolved    Boolean   @default(false)
+  triggeredAt DateTime  @default(now())
+}
+
+model ChatAccount {
+  id         Int       @id @default(autoincrement())
+  userId     String
+  user       User      @relation(fields: [userId], references: [userId])
+  platform   Platform
+  externalId String     // Telegram chat ID or WhatsApp phone number
+  linkedAt   DateTime   @default(now())
+
+  @@unique([platform, externalId])
+}
+
+enum Platform {
+  telegram
+  whatsapp
+}
+
+model Plan {
+  id           Int       @id @default(autoincrement())
+  userId       String
+  user         User      @relation(fields: [userId], references: [userId])
+  plan         PlanType
+  productLimit Int?
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+}
+
+enum PlanType {
+  free
+  pro
+  custom
+}
+
