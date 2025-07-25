@@ -1,10 +1,14 @@
+"use client";
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card"
 import { Code, Info } from "lucide-react"
+import { IconSun, IconMoon } from '@tabler/icons-react';
+import { useThemeStore } from '@/store/themeStore';
 
 export function SiteHeader() {
+  const { theme, toggleTheme } = useThemeStore();
   return (
     <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
@@ -40,6 +44,16 @@ export function SiteHeader() {
               </div>
             </HoverCardContent>
           </HoverCard>
+          <Button
+            aria-label="Toggle dark mode"
+            onClick={toggleTheme}
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+          >
+            {theme === 'dark' ? <IconSun size={18} /> : <IconMoon size={18} />}
+            <span className="sr-only">Toggle dark mode</span>
+          </Button>
         </div>
       </div>
     </header>

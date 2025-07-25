@@ -2,18 +2,28 @@
 
 import { prisma } from '@/lib/prisma';
 import { auth } from '@clerk/nextjs/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function createProduct(formData: FormData) {
-  const { userId } =await  auth();
-  if (!userId) throw new Error('Unauthorized');
+// GET /api/products
+export async function GET(request: NextRequest) {
+  const { userId } = await auth();
+  if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const name = formData.get('name') as string;
-  const quantity = parseInt(formData.get('quantity') as string);
-  const price = parseInt(formData.get('price') as string);
-  const cost = parseInt(formData.get('cost') as string);
-  const lowStockThreshold = parseInt(formData.get('lowStockThreshold') as string);
-  const tags = (formData.get('tags') as string)?.split(',') || [];
-  const imageUrl = formData.get('imageUrl') as string;
+  const products = await prisma.product.findMany({
+    where: { userId },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  return NextResponse.json(products);
+}
+
+// POST /api/products
+export async function POST(request: NextRequest) {
+  const { userId } = await auth();
+  if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const body = await request.json();
+  const { name, quantity, price, cost, lowStockThreshold, tags, imageUrl } = body;
 
   const product = await prisma.product.create({
     data: {
@@ -28,106 +38,41 @@ export async function createProduct(formData: FormData) {
     },
   });
 
-  return product;
+  return NextResponse.json(product, { status: 201 });
 }
 
-export async function getProducts() {
-  const { userId } =await  auth();
-  if (!userId) throw new Error('Unauthorized');
-
-  const products = await prisma.product.findMany({
-    where: { userId },
-    orderBy: { createdAt: 'desc' },
-  });
-
-  return products;
-}
-
-export async function updateProduct(productId: number, formData: FormData) {
+// PUT /api/products?productId=123
+export async function PUT(request: NextRequest) {
   const { userId } = await auth();
-  if (!userId) throw new Error('Unauthorized');
+  if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const name = formData.get('name') as string;
-  const quantity = parseInt(formData.get('quantity') as string);
-  const price = parseInt(formData.get('price') as string);
-  const cost = parseInt(formData.get('cost') as string);
-  const lowStockThreshold = parseInt(formData.get('lowStockThreshold') as string);
-  const tags = (formData.get('tags') as string)?.split(',') || [];
-  const imageUrl = formData.get('imageUrl') as string;
+  const { searchParams } = new URL(request.url);
+  const productId = parseInt(searchParams.get('productId') || '');
+  if (!productId) return NextResponse.json({ error: 'Missing productId' }, { status: 400 });
+
+  const body = await request.json();
+  const { name, quantity, price, cost, lowStockThreshold, tags, imageUrl } = body;
 
   const product = await prisma.product.update({
-    where: {
-      id: productId,
-      userId,
-    },
-    data: {
-      name,
-      quantity,
-      price,
-      cost,
-      lowStockThreshold,
-      tags,
-      imageUrl,
-    },
+    where: { id: productId, userId },
+    data: { name, quantity, price, cost, lowStockThreshold, tags, imageUrl },
   });
 
-  return product;
+  return NextResponse.json(product);
 }
 
-export async function deleteProduct(productId: number) {
+// DELETE /api/products?productId=123
+export async function DELETE(request: NextRequest) {
   const { userId } = await auth();
-  if (!userId) throw new Error('Unauthorized');
+  if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const { searchParams } = new URL(request.url);
+  const productId = parseInt(searchParams.get('productId') || '');
+  if (!productId) return NextResponse.json({ error: 'Missing productId' }, { status: 400 });
 
   const deleted = await prisma.product.delete({
-    where: {
-      id: productId,
-      userId,
-    },
+    where: { id: productId, userId },
   });
 
-  return deleted;
-}
-
-export async function createSale(formData: FormData) {
-  const { userId } = await auth();
-  if (!userId) throw new Error('Unauthorized');
-
-  const productId = parseInt(formData.get('productId') as string);
-  const quantity = parseInt(formData.get('quantity') as string);
-  const type = formData.get('type') as 'sale' | 'restock';
-  const note = formData.get('note') as string;
-
-  const sale = await prisma.sale.create({
-    data: {
-      userId,
-      productId,
-      quantity,
-      type,
-      note,
-    },
-  });
-
-  await prisma.product.update({
-    where: { id: productId },
-    data: {
-      quantity: {
-        increment: type === 'restock' ? quantity : -quantity,
-      },
-    },
-  });
-
-  return sale;
-}
-
-export async function getSales() {
-  const { userId } = await auth();
-  if (!userId) throw new Error('Unauthorized');
-
-  const sales = await prisma.sale.findMany({
-    where: { userId },
-    include: { product: true },
-    orderBy: { createdAt: 'desc' },
-  });
-
-  return sales;
+  return NextResponse.json(deleted);
 }

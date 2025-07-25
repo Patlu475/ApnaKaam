@@ -10,6 +10,7 @@ import {
   SignedOut,
   UserButton,
 } from '@clerk/nextjs'
+import ThemeProviderZustand from '@/components/ThemeProviderZustand';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,14 +34,14 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-        <Toaster />
-      </body>
-    </html>
+      <html lang="en">
+        <body>
+          <ThemeProviderZustand>
+            {children}
+          </ThemeProviderZustand>
+          <Toaster />
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

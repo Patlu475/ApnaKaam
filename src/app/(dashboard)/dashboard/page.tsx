@@ -2,6 +2,10 @@ import { ChartAreaInteractive } from "@/components/dashboard/chart-area-interact
 import { SectionCards } from "@/components/dashboard/section-cards"
 import { SiteHeader } from "@/components/dashboard/site-header"
 
+export const metadata = {
+  title: 'dashboard',
+};
+
 export default async function DashboardSubPage() {
   return (
     <div className="flex flex-1 flex-col">

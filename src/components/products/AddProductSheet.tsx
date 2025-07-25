@@ -19,7 +19,6 @@ import { Separator } from '@/components/ui/separator';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { X } from 'lucide-react';
 import { ImageUpload } from '@/components/ui/image-upload';
-import { createProduct } from '@/app/api/products/route';
 import { useToast } from '@/hooks/use-sonner';
 
 interface AddProductSheetProps {
@@ -58,18 +57,25 @@ const AddProductSheet: React.FC<AddProductSheetProps> = ({
     setIsSubmitting(true);
     
     try {
-      // Create FormData to send to server action
-      const productFormData = new FormData();
-      productFormData.append('name', formData.name);
-      productFormData.append('quantity', formData.quantity);
-      productFormData.append('price', formData.price);
-      productFormData.append('cost', formData.cost || '0');
-      productFormData.append('lowStockThreshold', formData.threshold);
-      productFormData.append('tags', tags.join(','));
-      if (imageUrl) productFormData.append('imageUrl', imageUrl);
+      // Prepare product data
+      const productData = {
+        name: formData.name,
+        quantity: parseInt(formData.quantity),
+        price: parseInt(formData.price),
+        cost: parseInt(formData.cost || '0'),
+        lowStockThreshold: parseInt(formData.threshold),
+        tags,
+        imageUrl,
+      };
 
-      // Call server action
-      const newProduct = await createProduct(productFormData);
+      // Call API route
+      const response = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(productData),
+      });
+      if (!response.ok) throw new Error('Failed to add product');
+      const newProduct = await response.json();
       
       // Update local state with new product
       onAddProduct(newProduct);

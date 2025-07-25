@@ -1,0 +1,377 @@
+{
+    "brandIdentity": {
+      "name": "Dia",
+      "logo": {
+        "style": "Speech bubble icon with 'Dia' text",
+        "color": "#000000",
+        "background": "transparent"
+      },
+      "tagline": "Learn with your tabs",
+      "positioning": "AI-powered browser assistant for writing and learning"
+    },
+  
+    "colorPalette": {
+      "primary": {
+        "black": "#000000",
+        "white": "#FFFFFF",
+        "gray_light": "#F5F5F5",
+        "gray_medium": "#E0E0E0",
+        "gray_dark": "#666666",
+        "gray_text": "#888888"
+      },
+      "accent": {
+        "purple_pink_start": "#E879F9",
+        "orange_end": "#F97316", 
+        "blue_start": "#3B82F6",
+        "cyan_end": "#06B6D4"
+      },
+      "feedback": {
+        "beta_badge": "#F3F4F6",
+        "beta_text": "#6B7280"
+      }
+    },
+  
+    "gradients": {
+      "hero_background": {
+        "type": "linear",
+        "direction": "135deg",
+        "stops": [
+          {"color": "#F8FAFC", "position": "0%"},
+          {"color": "#E2E8F0", "position": "100%"}
+        ],
+        "application": "Full page background for landing sections"
+      },
+      "card_decorative": {
+        "type": "linear", 
+        "direction": "135deg",
+        "stops": [
+          {"color": "#E879F9", "position": "0%"},
+          {"color": "#F97316", "position": "100%"}
+        ],
+        "application": "Decorative card backgrounds and accent elements"
+      },
+      "learning_card": {
+        "type": "linear",
+        "direction": "135deg", 
+        "stops": [
+          {"color": "#3B82F6", "position": "0%"},
+          {"color": "#06B6D4", "position": "100%"}
+        ],
+        "application": "Learning-focused card backgrounds"
+      },
+      "footer_accent": {
+        "type": "linear",
+        "direction": "90deg",
+        "stops": [
+          {"color": "#E879F9", "position": "0%"},
+          {"color": "#3B82F6", "position": "50%"},
+          {"color": "#06B6D4", "position": "100%"}
+        ],
+        "application": "Bottom page accent bar",
+        "height": "4px"
+      }
+    },
+  
+    "typography": {
+      "headings": {
+        "hero": {
+          "fontSize": "clamp(3rem, 8vw, 6rem)",
+          "fontWeight": "700",
+          "lineHeight": "1.1",
+          "color": "#000000",
+          "textAlign": "center",
+          "letterSpacing": "-0.02em"
+        },
+        "section": {
+          "fontSize": "clamp(2rem, 5vw, 3.5rem)",
+          "fontWeight": "700", 
+          "lineHeight": "1.2",
+          "color": "#000000",
+          "textAlign": "center",
+          "marginBottom": "1rem"
+        },
+        "card": {
+          "fontSize": "1.25rem",
+          "fontWeight": "600",
+          "lineHeight": "1.3",
+          "color": "#000000"
+        }
+      },
+      "body": {
+        "large": {
+          "fontSize": "1.25rem",
+          "fontWeight": "400",
+          "lineHeight": "1.6",
+          "color": "#666666",
+          "textAlign": "center"
+        },
+        "medium": {
+          "fontSize": "1rem", 
+          "fontWeight": "400",
+          "lineHeight": "1.5",
+          "color": "#666666"
+        },
+        "small": {
+          "fontSize": "0.875rem",
+          "fontWeight": "400", 
+          "lineHeight": "1.4",
+          "color": "#888888"
+        }
+      },
+      "labels": {
+        "badge": {
+          "fontSize": "0.75rem",
+          "fontWeight": "500",
+          "textTransform": "uppercase",
+          "letterSpacing": "0.05em",
+          "color": "#6B7280"
+        },
+        "testimonial_name": {
+          "fontSize": "0.875rem",
+          "fontWeight": "600",
+          "color": "#000000"
+        },
+        "testimonial_role": {
+          "fontSize": "0.75rem",
+          "fontWeight": "400",
+          "color": "#888888"
+        }
+      }
+    },
+  
+    "components": {
+      "buttons": {
+        "primary": {
+          "background": "#000000",
+          "color": "#FFFFFF",
+          "border": "none",
+          "borderRadius": "12px",
+          "padding": "12px 24px",
+          "fontSize": "1rem",
+          "fontWeight": "500",
+          "cursor": "pointer",
+          "transition": "all 0.2s ease",
+          "states": {
+            "hover": {
+              "background": "#333333",
+              "transform": "translateY(-1px)"
+            },
+            "active": {
+              "transform": "translateY(0)"
+            }
+          }
+        },
+        "secondary": {
+          "background": "#F5F5F5",
+          "color": "#000000", 
+          "border": "1px solid #E0E0E0",
+          "borderRadius": "12px",
+          "padding": "10px 20px",
+          "fontSize": "0.875rem",
+          "fontWeight": "500",
+          "cursor": "pointer",
+          "transition": "all 0.2s ease",
+          "states": {
+            "hover": {
+              "background": "#E0E0E0",
+              "borderColor": "#666666"
+            }
+          }
+        }
+      },
+  
+      "cards": {
+        "hero_demo": {
+          "background": "#FFFFFF",
+          "border": "1px solid #E0E0E0",
+          "borderRadius": "16px",
+          "padding": "24px",
+          "boxShadow": "0 4px 20px rgba(0, 0, 0, 0.08)",
+          "maxWidth": "600px",
+          "margin": "0 auto"
+        },
+        "feature_visual": {
+          "background": "gradient(card_decorative or learning_card)",
+          "borderRadius": "20px",
+          "padding": "32px",
+          "boxShadow": "0 8px 32px rgba(0, 0, 0, 0.12)",
+          "overflow": "hidden",
+          "position": "relative"
+        },
+        "testimonial": {
+          "background": "#FFFFFF",
+          "border": "1px solid #E0E0E0", 
+          "borderRadius": "12px",
+          "padding": "20px",
+          "boxShadow": "0 2px 12px rgba(0, 0, 0, 0.06)",
+          "maxWidth": "300px"
+        }
+      },
+  
+      "navigation": {
+        "header": {
+          "background": "rgba(255, 255, 255, 0.95)",
+          "backdropFilter": "blur(10px)",
+          "borderBottom": "1px solid #E0E0E0",
+          "padding": "16px 0",
+          "position": "sticky",
+          "top": "0",
+          "zIndex": "100"
+        },
+        "links": {
+          "fontSize": "0.875rem",
+          "fontWeight": "500",
+          "color": "#666666",
+          "textDecoration": "none",
+          "padding": "8px 16px",
+          "borderRadius": "8px",
+          "transition": "all 0.2s ease",
+          "states": {
+            "hover": {
+              "color": "#000000",
+              "background": "#F5F5F5"
+            },
+            "active": {
+              "color": "#000000",
+              "background": "#E0E0E0"
+            }
+          }
+        }
+      },
+  
+      "badges": {
+        "beta": {
+          "background": "#F3F4F6",
+          "color": "#6B7280",
+          "border": "1px solid #E5E7EB",
+          "borderRadius": "6px",
+          "padding": "4px 8px",
+          "fontSize": "0.75rem",
+          "fontWeight": "500",
+          "textTransform": "uppercase",
+          "letterSpacing": "0.05em"
+        },
+        "early_access": {
+          "background": "#F5F5F5",
+          "color": "#666666",
+          "borderRadius": "8px",
+          "padding": "6px 12px",
+          "fontSize": "0.75rem",
+          "fontWeight": "500"
+        }
+      },
+  
+      "icons": {
+        "logo": {
+          "fill": "#000000",
+          "width": "32px",
+          "height": "32px"
+        },
+        "privacy": {
+          "fill": "#000000",
+          "width": "48px", 
+          "height": "48px",
+          "marginBottom": "16px"
+        },
+        "user_avatar": {
+          "borderRadius": "50%",
+          "width": "40px",
+          "height": "40px",
+          "border": "2px solid #E0E0E0"
+        }
+      }
+    },
+  
+    "layout": {
+      "container": {
+        "maxWidth": "1200px",
+        "margin": "0 auto",
+        "padding": "0 24px"
+      },
+      "section": {
+        "padding": "80px 0",
+        "textAlign": "center"
+      },
+      "grid": {
+        "testimonials": {
+          "display": "grid",
+          "gridTemplateColumns": "repeat(auto-fit, minmax(280px, 1fr))",
+          "gap": "24px",
+          "padding": "40px 0"
+        }
+      }
+    },
+  
+    "effects": {
+      "shadows": {
+        "card_subtle": "0 2px 12px rgba(0, 0, 0, 0.06)",
+        "card_medium": "0 4px 20px rgba(0, 0, 0, 0.08)", 
+        "card_prominent": "0 8px 32px rgba(0, 0, 0, 0.12)",
+        "button_hover": "0 4px 16px rgba(0, 0, 0, 0.1)"
+      },
+      "transitions": {
+        "default": "all 0.2s ease",
+        "smooth": "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+      },
+      "backdrop": {
+        "navigation": "blur(10px)"
+      }
+    },
+  
+    "spacing": {
+      "sections": {
+        "large": "80px",
+        "medium": "60px", 
+        "small": "40px"
+      },
+      "components": {
+        "card_padding": "24px",
+        "button_padding": "12px 24px",
+        "gap_small": "16px",
+        "gap_medium": "24px",
+        "gap_large": "40px"
+      }
+    },
+  
+    "responsive": {
+      "breakpoints": {
+        "mobile": "768px",
+        "tablet": "1024px",
+        "desktop": "1200px"
+      },
+      "adaptations": {
+        "typography_scaling": "clamp() functions for fluid typography",
+        "padding_reduction": "Reduce section padding by 50% on mobile",
+        "grid_collapse": "Single column layout below 768px"
+      }
+    },
+  
+    "contentRules": {
+      "DO_APPLY": [
+        "Gradients to full card backgrounds and decorative elements",
+        "Black primary color to main headings and logo",
+        "Gray colors to body text and secondary elements", 
+        "White backgrounds to content cards",
+        "Subtle shadows to elevated components",
+        "Border radius to all interactive elements",
+        "Smooth transitions to hover states"
+      ],
+      "DO_NOT_APPLY": [
+        "Gradients to text content or small icons",
+        "Card shadows to text elements",
+        "Button styles to navigation links",
+        "Hero typography sizes to body content",
+        "Primary button colors to secondary actions",
+        "Card border radius to page containers",
+        "Heavy shadows to subtle interface elements"
+      ]
+    },
+  
+    "stateManagement": {
+      "default": "Clean, minimal aesthetic with subtle shadows",
+      "hover": "Slight elevation and color intensification", 
+      "active": "Pressed state with reduced elevation",
+      "focus": "Visible focus rings for accessibility",
+      "loading": "Subtle animation states for async actions"
+    }
+  }
