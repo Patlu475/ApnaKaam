@@ -10,7 +10,7 @@ import { DrawerClose, DrawerFooter } from '@/components/ui/drawer';
 import { Package, TrendingUp, Save, AlertCircle, Loader2 } from 'lucide-react';
 import { Combobox } from '@/components/ui/combobox';
 import { toast } from "sonner";
-import { getProducts, createSale } from '@/app/api/sales/route';
+
 
 interface Product {
   id: number;
@@ -64,7 +64,9 @@ export const LogSaleForm: React.FC<LogSaleFormProps> = ({ onClose, onSubmit, pro
     const fetchProducts = async () => {
       try {
         setIsLoading(true);
-        const fetchedProducts = await getProducts();
+        const response = await fetch('/api/products');
+        if (!response.ok) throw new Error('Failed to fetch products');
+        const fetchedProducts = await response.json();
         setProducts(fetchedProducts);
       } catch (error) {
         console.error('Failed to fetch products:', error);
@@ -156,8 +158,17 @@ export const LogSaleForm: React.FC<LogSaleFormProps> = ({ onClose, onSubmit, pro
       submitData.append('type', formData.type);
       submitData.append('note', formData.note || '');
       
-      // Call the server action
-      const sale = await createSale(submitData);
+      // Call the API endpoint
+      const response = await fetch('/api/sales', {
+        method: 'POST',
+        body: submitData
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to create sale');
+      }
+      
+      const sale = await response.json();
       
       // Call the parent callback with the created sale
       onSubmit({
