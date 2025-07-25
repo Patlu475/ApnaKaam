@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card"
 import { Code, Info } from "lucide-react"
-import { IconSun, IconMoon } from '@tabler/icons-react';
+import { Sun, Moon } from 'lucide-react';
 import { useThemeStore } from '@/store/themeStore';
 
 export function SiteHeader() {
@@ -51,7 +51,7 @@ export function SiteHeader() {
             size="icon"
             className="rounded-full"
           >
-            {theme === 'dark' ? <IconSun size={18} /> : <IconMoon size={18} />}
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             <span className="sr-only">Toggle dark mode</span>
           </Button>
         </div>

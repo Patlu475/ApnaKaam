@@ -99,7 +99,9 @@ export const LogSaleForm: React.FC<LogSaleFormProps> = ({ onClose, onSubmit, pro
     setFormData({ ...formData, quantity: value });
   };
 
-  const handleProductChange = (value: string | number, productData: Product) => {
+  const handleProductChange = (value: string | number, productData?: Product) => {
+    if (!productData) return;
+    
     setSelectedProduct(productData);
     setFormData({
       ...formData,
@@ -130,15 +132,18 @@ export const LogSaleForm: React.FC<LogSaleFormProps> = ({ onClose, onSubmit, pro
     // Validate form
     if (!formData.productId || !selectedProduct) {
       toast.error("Please select a product");
+      return;
     }
 
     if (!formData.quantity || parseInt(formData.quantity) <= 0) {
       toast.error("Please enter a valid quantity");
+      return;
     }
 
     const error = validateQuantity(formData.quantity, formData.type);
     if (error) {
       toast.error(error);
+      return;
     }
 
     try {
@@ -156,13 +161,11 @@ export const LogSaleForm: React.FC<LogSaleFormProps> = ({ onClose, onSubmit, pro
       
       // Call the parent callback with the created sale
       onSubmit({
-        id: sale.id,
-        productId: parseInt(formData.productId),
+        productId: formData.productId,
         productName: formData.productName,
         quantity: parseInt(formData.quantity),
         type: formData.type,
-        note: formData.note,
-        timestamp: new Date().toISOString()
+        note: formData.note
       });
       
       toast.success(`${formData.type === 'sale' ? 'Sale' : 'Restock'} recorded successfully`);

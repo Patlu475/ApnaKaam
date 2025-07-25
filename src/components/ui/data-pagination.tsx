@@ -11,11 +11,11 @@ import {
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { 
-  IconChevronsLeft, 
-  IconChevronLeft, 
-  IconChevronRight, 
-  IconChevronsRight 
-} from '@tabler/icons-react';
+  ChevronsLeft, 
+  ChevronLeft, 
+  ChevronRight, 
+  ChevronsRight 
+} from 'lucide-react';
 
 interface DataPaginationProps {
   currentPage: number;
@@ -86,7 +86,7 @@ export function DataPagination({
             disabled={currentPage === 1}
           >
             <span className="sr-only">Go to first page</span>
-            <IconChevronsLeft className="h-4 w-4" />
+            <ChevronsLeft className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
@@ -96,7 +96,7 @@ export function DataPagination({
             disabled={currentPage === 1}
           >
             <span className="sr-only">Go to previous page</span>
-            <IconChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
@@ -106,7 +106,7 @@ export function DataPagination({
             disabled={currentPage === pageCount}
           >
             <span className="sr-only">Go to next page</span>
-            <IconChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
@@ -116,7 +116,7 @@ export function DataPagination({
             disabled={currentPage === pageCount}
           >
             <span className="sr-only">Go to last page</span>
-            <IconChevronsRight className="h-4 w-4" />
+            <ChevronsRight className="h-4 w-4" />
           </Button>
         </div>
       </div>

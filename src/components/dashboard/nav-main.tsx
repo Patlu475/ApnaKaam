@@ -3,12 +3,12 @@
 import * as React from "react"
 import Link from "next/link"
 import {
-  IconAlertTriangle,
-  IconDashboard,
-  IconPackages,
-  IconShoppingCart,
-  IconRobot,
-} from "@tabler/icons-react"
+  AlertTriangle,
+  LayoutDashboard,
+  Package,
+  ShoppingCart,
+  Bot,
+} from "lucide-react"
 
 import {
   SidebarMenu,
@@ -30,27 +30,27 @@ export function NavMain({ className }: NavMainProps) {
     {
       title: "Dashboard",
       url: "/dashboard",
-      icon: IconDashboard,
+      icon: LayoutDashboard,
     },
     {
       title: "Products",
       url: "/products",
-      icon: IconPackages,
+      icon: Package,
     },
     {
       title: "Sales",
       url: "/sales",
-      icon: IconShoppingCart,
+      icon: ShoppingCart,
     },
     {
       title: "Alerts",
       url: "/alerts",
-      icon: IconAlertTriangle,
+      icon: AlertTriangle,
     },
     {
       title: "Chatbot",
       url: "/chatbot",
-      icon: IconRobot,
+      icon: Bot,
     }
   ]
 

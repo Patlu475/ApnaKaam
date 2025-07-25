@@ -47,8 +47,8 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product, onEdit, onDele
     setShowDeleteDialog(false);
   };
 
-  const handleEdit = (updatedProduct: unknown) => {
-    onEdit(product.id, updatedProduct);
+  const handleEdit = (updatedProduct: Partial<Product> & Pick<Product, 'name' | 'quantity' | 'price' | 'lowStockThreshold'>) => {
+    onEdit(product.id, updatedProduct as Product);
     setShowEditDialog(false);
   };
 

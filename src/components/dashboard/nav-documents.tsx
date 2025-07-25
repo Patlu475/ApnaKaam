@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { IconPlus } from "@tabler/icons-react"
+import { Plus } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -27,14 +27,14 @@ export function NavDocuments({ className }: NavDocumentsProps) {
       <div className="flex items-center justify-between px-3 py-2">
         <span className="text-xs uppercase tracking-wider text-muted-foreground">Quick Actions</span>
         <Button variant="ghost" size="icon" className="h-8 w-8">
-          <IconPlus className="size-4" />
+          <Plus className="size-4" />
           <span className="sr-only">Add new product</span>
         </Button>
       </div>
       <SidebarMenuItem>
         <SidebarMenuButton asChild>
           <Link href="/dashboard/products/new">
-            <IconPlus className="size-4" />
+            <Plus className="size-4" />
             <span>New Product</span>
           </Link>
         </SidebarMenuButton>

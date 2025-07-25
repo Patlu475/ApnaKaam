@@ -20,7 +20,7 @@ import {
 } from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { CSS } from "@dnd-kit/utilities";
-import { IconGripVertical } from "@tabler/icons-react";
+import { GripVertical } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -82,7 +82,7 @@ function DragHandle({ id }: { id: number }) {
       className="text-muted-foreground size-7 hover:bg-transparent"
       size="icon"
     >
-      <IconGripVertical className="text-muted-foreground size-3" />
+      <GripVertical className="text-muted-foreground size-3" />
       <span className="sr-only">Drag to reorder</span>
     </Button>
   );

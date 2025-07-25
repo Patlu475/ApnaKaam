@@ -3,8 +3,8 @@
 import * as React from "react"
 import Link from "next/link"
 import {
-  IconPackage
-} from "@tabler/icons-react"
+  Package
+} from "lucide-react"
 import { useUser } from "@clerk/nextjs"
 
 import { NavMain } from "@/components/dashboard/nav-main"
@@ -39,7 +39,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <Link href="/dashboard">
-                <IconPackage className="size-6" />
+                <Package className="size-6" />
                 <span className="text-base font-semibold">Apna Kaam Inc.</span>
               </Link>
             </SidebarMenuButton>
