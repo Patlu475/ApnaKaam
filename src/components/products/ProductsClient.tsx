@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import ProductsTable from '@/components/products/ProductsTable';
 import AddProductSheet from '@/components/products/AddProductSheet';
-import { useToast } from '@/hooks/use-sonner';
 import { useProductsStore } from '@/store/productsStore';
 
 interface Product {
@@ -28,7 +27,6 @@ interface ProductsClientProps {
 const ProductsClient: React.FC<ProductsClientProps> = ({ initialProducts }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddSheetOpen, setIsAddSheetOpen] = useState(false);
-  const { toast } = useToast();
   const products = useProductsStore((state) => state.products);
   const setProducts = useProductsStore((state) => state.setProducts);
   const addProduct = useProductsStore((state) => state.addProduct);
@@ -52,7 +50,7 @@ const ProductsClient: React.FC<ProductsClientProps> = ({ initialProducts }) => {
     deleteProduct(id);
   };
 
-  const handleEditProduct = (id: number, updatedProduct: any) => {
+  const handleEditProduct = (id: number, updatedProduct: unknown) => {
     editProduct(id, updatedProduct);
   };
 

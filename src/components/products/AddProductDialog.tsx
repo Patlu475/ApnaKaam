@@ -12,10 +12,18 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { X } from 'lucide-react';
 
+interface Product {
+  name: string;
+  quantity: number;
+  price: number;
+  threshold: number;
+  tags: string[];
+}
+
 interface AddProductDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAddProduct: (product: any) => void;
+  onAddProduct: (product: Product) => void;
 }
 
 const AddProductDialog: React.FC<AddProductDialogProps> = ({ 
@@ -32,7 +40,7 @@ const AddProductDialog: React.FC<AddProductDialogProps> = ({
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.name || !formData.quantity || !formData.price || !formData.threshold) {

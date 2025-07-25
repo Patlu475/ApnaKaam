@@ -2,9 +2,7 @@
 import { useState, useMemo } from 'react';
 import { Search, Filter, Package } from 'lucide-react';
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 import { AlertCard } from '@/components/alert/AlertCard';
 import { Alert } from '@/app/types/Alert';
 import { SiteHeader } from "@/components/dashboard/site-header";

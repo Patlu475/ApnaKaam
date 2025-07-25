@@ -6,12 +6,8 @@ import {
   IconAlertTriangle,
   IconDashboard,
   IconPackages,
-  IconSettings,
   IconShoppingCart,
   IconRobot,
-  IconUserCheck,
-  IconMoon,
-  IconSun
 } from "@tabler/icons-react"
 
 import {
@@ -20,7 +16,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-import { useThemeStore } from '@/store/themeStore';
 
 interface NavMainProps extends React.HTMLAttributes<HTMLDivElement> {
   items?: {
@@ -30,7 +25,7 @@ interface NavMainProps extends React.HTMLAttributes<HTMLDivElement> {
   }[]
 }
 
-export function NavMain({ className, items, ...props }: NavMainProps) {
+export function NavMain({ className }: NavMainProps) {
   const mainNavItems = [
     {
       title: "Dashboard",
@@ -58,7 +53,6 @@ export function NavMain({ className, items, ...props }: NavMainProps) {
       icon: IconRobot,
     }
   ]
-  const { theme, toggleTheme } = useThemeStore();
 
   return (
     <SidebarMenu className={className}>

@@ -14,7 +14,7 @@ interface DateRangeFilterProps {
   onChange: (range: { from: Date | null; to: Date | null }) => void;
 }
 
-export const DateRangeFilter: React.FC<DateRangeFilterProps> = ({ value, onChange }) => {
+export const DateRangeFilter: React.FC<DateRangeFilterProps> = ({ onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const presetRanges = [

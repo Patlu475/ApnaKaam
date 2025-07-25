@@ -1,4 +1,4 @@
-import { AlertTriangle, Package, Boxes, Grid } from "lucide-react"
+import { AlertTriangle, Package, Grid } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import {

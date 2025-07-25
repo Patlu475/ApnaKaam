@@ -1,7 +1,8 @@
 import React from 'react';
+import Image from 'next/image';
 import { useImageUpload } from '@/hooks/use-image-upload';
 import { Button } from '@/components/ui/button';
-import { X, Upload, Image } from 'lucide-react';
+import { X, Image as ImageIcon } from 'lucide-react';
 
 interface ImageUploadProps {
   onImageChange?: (url: string | null) => void;
@@ -11,7 +12,6 @@ interface ImageUploadProps {
 export function ImageUpload({ onImageChange, className = '' }: ImageUploadProps) {
   const { 
     previewUrl, 
-    fileName, 
     fileInputRef, 
     handleThumbnailClick, 
     handleFileChange,
@@ -37,9 +37,11 @@ export function ImageUpload({ onImageChange, className = '' }: ImageUploadProps)
 
       {previewUrl ? (
         <div className="relative overflow-hidden rounded-md border border-border">
-          <img 
+          <Image 
             src={previewUrl} 
-            alt={fileName || 'Preview'} 
+            alt="Uploaded image" 
+            width={400}
+            height={160}
             className="h-40 w-full object-cover"
           />
           <Button
@@ -60,7 +62,7 @@ export function ImageUpload({ onImageChange, className = '' }: ImageUploadProps)
           onClick={handleThumbnailClick}
         >
           <div className="rounded-md bg-muted p-2">
-            <Image className="h-6 w-6 text-muted-foreground" />
+            <ImageIcon className="h-6 w-6 text-muted-foreground" />
           </div>
           <div className="text-sm font-medium">
             Click to upload product image

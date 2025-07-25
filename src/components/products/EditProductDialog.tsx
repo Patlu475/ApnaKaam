@@ -38,7 +38,7 @@ interface EditProductDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   product: Product;
-  onEditProduct: (product: any) => void;
+  onEditProduct: (product: Product) => void;
 }
 
 const EditProductDialog: React.FC<EditProductDialogProps> = ({ 
@@ -79,7 +79,6 @@ const EditProductDialog: React.FC<EditProductDialogProps> = ({
     if (e) e.preventDefault();
     
     if (!formData.name || !formData.quantity || !formData.price || !formData.threshold) {
-      return;
     }
 
     onEditProduct({

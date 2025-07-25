@@ -25,9 +25,17 @@ interface Product {
   updatedAt: Date;
 }
 
+interface SaleData {
+  productId: string;
+  productName: string;
+  quantity: number;
+  type: 'sale' | 'restock';
+  note?: string;
+}
+
 interface LogSaleFormProps {
   onClose: () => void;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: SaleData) => void;
   productsList?: Product[];
 }
 
@@ -51,7 +59,6 @@ export const LogSaleForm: React.FC<LogSaleFormProps> = ({ onClose, onSubmit, pro
   useEffect(() => {
     if (productsList.length > 0) {
       setProducts(productsList);
-      return;
     }
 
     const fetchProducts = async () => {
@@ -117,24 +124,21 @@ export const LogSaleForm: React.FC<LogSaleFormProps> = ({ onClose, onSubmit, pro
     }
   };
 
-  const handleSubmit = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     
     // Validate form
     if (!formData.productId || !selectedProduct) {
       toast.error("Please select a product");
-      return;
     }
 
     if (!formData.quantity || parseInt(formData.quantity) <= 0) {
       toast.error("Please enter a valid quantity");
-      return;
     }
 
     const error = validateQuantity(formData.quantity, formData.type);
     if (error) {
       toast.error(error);
-      return;
     }
 
     try {

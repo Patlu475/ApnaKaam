@@ -5,15 +5,12 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { LogSaleForm } from './LogSaleForm';
 
 interface Product {
@@ -51,7 +48,6 @@ export const LogSaleButton: React.FC<LogSaleButtonProps> = ({
   isLoading = false 
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const isMobile = useIsMobile();
 
   const handleSubmit = (data: SaleRecord) => {
     console.log('New transaction:', data);

@@ -33,6 +33,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DataPagination } from '@/components/ui/data-pagination';
 import ProductActions from '@/components/products/ProductActions';
+import Image from 'next/image';
 
 interface Product {
   id: number;
@@ -50,7 +51,7 @@ interface Product {
 interface ProductsTableProps {
   products: Product[];
   onDelete: (id: number) => void;
-  onEdit: (id: number, product: any) => void;
+  onEdit: (id: number, product: Product) => void;
   isLoading?: boolean;
 }
 
@@ -82,7 +83,7 @@ function DraggableRow({ product, lowStock, formatPrice, onEdit, onDelete }: {
   product: Product, 
   lowStock: boolean, 
   formatPrice: (price: number) => string,
-  onEdit: (id: number, product: any) => void,
+          onEdit: (id: number, product: Product) => void,
   onDelete: (id: number) => void
 }) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
@@ -106,7 +107,7 @@ function DraggableRow({ product, lowStock, formatPrice, onEdit, onDelete }: {
         <div className="flex items-center gap-3">
           {product.imageUrl && (
             <div className="h-10 w-10 rounded-md overflow-hidden flex-shrink-0">
-              <img 
+              <Image 
                 src={product.imageUrl} 
                 alt={product.name} 
                 className="h-full w-full object-cover"

@@ -18,17 +18,17 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-interface ComboboxProps {
-  options: { label: string; value: string | number; data?: any }[]
+interface ComboboxProps<T = unknown> {
+  options: { label: string; value: string | number; data?: T }[]
   value?: string | number
-  onChange: (value: string | number, data?: any) => void
+  onChange: (value: string | number, data?: T) => void
   placeholder?: string
   emptyText?: string
   className?: string
   disabled?: boolean
 }
 
-export function Combobox({
+export function Combobox<T = unknown>({
   options,
   value,
   onChange,
@@ -36,7 +36,7 @@ export function Combobox({
   emptyText = "No results found.",
   className,
   disabled = false,
-}: ComboboxProps) {
+}: ComboboxProps<T>) {
   const [open, setOpen] = React.useState(false)
 
   // Find the selected option for display

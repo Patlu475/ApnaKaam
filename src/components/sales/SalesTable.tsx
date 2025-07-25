@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
-import { MoreHorizontal, Package, TrendingUp, AlertTriangle } from 'lucide-react';
+import { MoreHorizontal, Package, TrendingUp } from 'lucide-react';
 import {
   DndContext,
   closestCenter,
@@ -152,7 +152,7 @@ function DraggableRow({ row }: { row: SaleData }) {
   );
 }
 
-const ActionDropdown = ({ itemId }: { itemId: number }) => (
+const ActionDropdown = () => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button

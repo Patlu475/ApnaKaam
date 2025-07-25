@@ -43,7 +43,7 @@ interface SalesClientProps {
 }
 
 const SalesClient: React.FC<SalesClientProps> = ({ initialProducts, initialSales }) => {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [products] = useState<Product[]>(initialProducts);
   const [searchTerm, setSearchTerm] = useState('');
   const [dateRange, setDateRange] = useState<DateRange>({ from: null, to: null });
   const [currentPage, setCurrentPage] = useState(1);

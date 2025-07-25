@@ -9,7 +9,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,10 +20,20 @@ import { X } from 'lucide-react';
 import { ImageUpload } from '@/components/ui/image-upload';
 import { useToast } from '@/hooks/use-sonner';
 
+interface Product {
+  name: string;
+  quantity: number;
+  price: number;
+  cost: number;
+  lowStockThreshold: number;
+  tags: string[];
+  imageUrl: string | null;
+}
+
 interface AddProductSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAddProduct: (product: any) => void;
+  onAddProduct: (product: Product) => void;
 }
 
 const AddProductSheet: React.FC<AddProductSheetProps> = ({ 
@@ -58,7 +67,7 @@ const AddProductSheet: React.FC<AddProductSheetProps> = ({
     
     try {
       // Prepare product data
-      const productData = {
+      const productData: Product = {
         name: formData.name,
         quantity: parseInt(formData.quantity),
         price: parseInt(formData.price),

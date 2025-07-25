@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/sidebar"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { user, isLoaded } = useUser();
+  const { user } = useUser();
   
   // Default fallback data in case user is not loaded yet
   const userData = {

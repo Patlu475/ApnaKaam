@@ -19,7 +19,7 @@ interface NavDocumentsProps extends React.HTMLAttributes<HTMLDivElement> {
   }[]
 }
 
-export function NavDocuments({ className, items, ...props }: NavDocumentsProps) {
+export function NavDocuments({ className }: NavDocumentsProps) {
   // We don't need this component for our inventory app, but we'll keep it 
   // as a simple placeholder to prevent import errors
   return (

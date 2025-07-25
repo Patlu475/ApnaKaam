@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
 import { SiteHeader } from "@/components/dashboard/site-header";
-import { MessageSquare, Smartphone, TrendingUp, AlertTriangle, Package, BarChart3, ShoppingCart, RefreshCw, CheckCircle } from 'lucide-react';
+import { Smartphone, TrendingUp, AlertTriangle, Package, BarChart3, ShoppingCart, RefreshCw, CheckCircle } from 'lucide-react';
 
 const Chatbot = () => {
   const exampleCommands = [

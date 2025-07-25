@@ -34,7 +34,7 @@ interface Product {
 
 interface ProductActionsProps {
   product: Product;
-  onEdit: (id: number, product: any) => void;
+  onEdit: (id: number, product: Product) => void;
   onDelete: (id: number) => void;
 }
 
@@ -47,7 +47,7 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product, onEdit, onDele
     setShowDeleteDialog(false);
   };
 
-  const handleEdit = (updatedProduct: any) => {
+  const handleEdit = (updatedProduct: unknown) => {
     onEdit(product.id, updatedProduct);
     setShowEditDialog(false);
   };
@@ -84,7 +84,7 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product, onEdit, onDele
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Product</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete "{product.name}"? This action cannot be undone.
+              Are you sure you want to delete &quot;{product.name}&quot;? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
