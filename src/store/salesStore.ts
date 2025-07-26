@@ -1,19 +1,10 @@
 import { create } from 'zustand';
-
-interface SalesRecord {
-  id: number;
-  productId: number;
-  productName: string;
-  quantity: number;
-  type: 'sale' | 'restock';
-  note: string;
-  timestamp: string;
-}
+import { SaleRecord } from '@/types/sales';
 
 interface SalesStore {
-  sales: SalesRecord[];
-  setSales: (sales: SalesRecord[]) => void;
-  addSale: (sale: SalesRecord) => void;
+  sales: SaleRecord[];
+  setSales: (sales: SaleRecord[]) => void;
+  addSale: (sale: SaleRecord) => void;
   clearSales: () => void;
 }
 

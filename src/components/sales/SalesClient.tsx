@@ -8,38 +8,11 @@ import { DataPagination } from '@/components/ui/data-pagination';
 import { RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSalesStore } from '@/store/salesStore';
-
-interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-  cost?: number;
-  lowStockThreshold: number;
-  tags: string[];
-  imageUrl?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface SalesRecord {
-  id: number;
-  productId: number;
-  productName: string;
-  quantity: number;
-  type: 'sale' | 'restock';
-  note: string;
-  timestamp: string;
-}
-
-interface DateRange {
-  from: Date | null;
-  to: Date | null;
-}
+import { Product, SaleRecord, DateRange } from '@/types/sales';
 
 interface SalesClientProps {
   initialProducts: Product[];
-  initialSales: SalesRecord[];
+  initialSales: SaleRecord[];
 }
 
 const SalesClient: React.FC<SalesClientProps> = ({ initialProducts, initialSales }) => {
@@ -87,7 +60,7 @@ const SalesClient: React.FC<SalesClientProps> = ({ initialProducts, initialSales
   );
 
   // Handle sale creation (add to state)
-  const handleSaleCreated = (saleData: SalesRecord) => {
+  const handleSaleCreated = (saleData: SaleRecord) => {
     addSale(saleData);
     // Optionally update products state if needed
   };

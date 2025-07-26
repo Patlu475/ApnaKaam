@@ -8,10 +8,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { DateRange } from '@/types/sales';
 
 interface DateRangeFilterProps {
-  value: { from: Date | null; to: Date | null };
-  onChange: (range: { from: Date | null; to: Date | null }) => void;
+  value: DateRange;
+  onChange: (range: DateRange) => void;
 }
 
 export const DateRangeFilter: React.FC<DateRangeFilterProps> = ({ onChange }) => {

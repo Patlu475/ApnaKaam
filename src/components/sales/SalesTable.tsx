@@ -37,19 +37,10 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-
-interface SaleData {
-  id: number;
-  productId: number;
-  productName: string;
-  quantity: number;
-  type: 'sale' | 'restock';
-  note: string;
-  timestamp: string;
-}
+import { SaleRecord } from '@/types/sales';
 
 interface SalesTableProps {
-  data: SaleData[];
+  data: SaleRecord[];
 }
 
 // Helper functions defined at the top level
@@ -88,7 +79,7 @@ function DragHandle({ id }: { id: number }) {
   );
 }
 
-function DraggableRow({ row }: { row: SaleData }) {
+function DraggableRow({ row }: { row: SaleRecord }) {
   const {
     attributes,
     listeners,

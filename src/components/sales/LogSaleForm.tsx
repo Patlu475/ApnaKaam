@@ -10,32 +10,11 @@ import { DrawerClose, DrawerFooter } from '@/components/ui/drawer';
 import { Package, TrendingUp, Save, AlertCircle, Loader2 } from 'lucide-react';
 import { Combobox } from '@/components/ui/combobox';
 import { toast } from "sonner";
-
-
-interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-  cost?: number;
-  lowStockThreshold: number;
-  tags: string[];
-  imageUrl?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface SaleData {
-  productId: string;
-  productName: string;
-  quantity: number;
-  type: 'sale' | 'restock';
-  note?: string;
-}
+import { Product, SaleFormData } from '@/types/sales';
 
 interface LogSaleFormProps {
   onClose: () => void;
-  onSubmit: (data: SaleData) => void;
+  onSubmit: (data: SaleFormData) => void;
   productsList?: Product[];
 }
 
@@ -151,24 +130,7 @@ export const LogSaleForm: React.FC<LogSaleFormProps> = ({ onClose, onSubmit, pro
     try {
       setIsSubmitting(true);
       
-      // Create form data to submit
-      const submitData = new FormData();
-      submitData.append('productId', formData.productId);
-      submitData.append('quantity', formData.quantity);
-      submitData.append('type', formData.type);
-      submitData.append('note', formData.note || '');
-      
-      // Call the API endpoint
-      const response = await fetch('/api/sales', {
-        method: 'POST',
-        body: submitData
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to create sale');
-      }
-      
-      // Call the parent callback with the created sale
+      // Call the parent callback with the form data
       onSubmit({
         productId: formData.productId,
         productName: formData.productName,

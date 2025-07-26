@@ -12,29 +12,7 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { LogSaleForm } from './LogSaleForm';
-
-interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-  cost?: number;
-  lowStockThreshold: number;
-  tags: string[];
-  imageUrl?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface SaleRecord {
-  id: number;
-  productId: number;
-  productName: string;
-  quantity: number;
-  type: 'sale' | 'restock';
-  note: string;
-  timestamp: string;
-}
+import { Product, SaleFormData, SaleRecord } from '@/types/sales';
 
 interface LogSaleButtonProps {
   products?: Product[];
@@ -49,12 +27,38 @@ export const LogSaleButton: React.FC<LogSaleButtonProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSubmit = (data: SaleRecord) => {
-    console.log('New transaction:', data);
+  const handleSubmit = async (data: SaleFormData) => {
+    console.log('New transaction data:', data);
     
-    // Call the parent callback if provided
-    if (onSaleCreated) {
-      onSaleCreated(data);
+    try {
+      // Create form data to submit
+      const submitData = new FormData();
+      submitData.append('productId', data.productId);
+      submitData.append('quantity', data.quantity.toString());
+      submitData.append('type', data.type);
+      submitData.append('note', data.note || '');
+      
+      // Call the API endpoint
+      const response = await fetch('/api/sales', {
+        method: 'POST',
+        body: submitData
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to create sale');
+      }
+      
+      const saleRecord: SaleRecord = await response.json();
+      
+      // Call the parent callback with the complete sale record
+      if (onSaleCreated) {
+        onSaleCreated(saleRecord);
+      }
+      
+      setIsOpen(false);
+    } catch (error) {
+      console.error('Failed to create transaction:', error);
+      // You might want to show an error toast here
     }
   };
 
