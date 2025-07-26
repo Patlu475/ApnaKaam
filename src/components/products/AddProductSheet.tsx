@@ -90,7 +90,7 @@ const AddProductSheet: React.FC<AddProductSheetProps> = ({
       onAddProduct(newProduct);
       
       // Show success toast
-      toast.success("Product Added Successfully", `${formData.name} has been added to your inventory.`);
+      toast.success(`${formData.name} has been added to your inventory.`);
       
       // Reset form
       setFormData({ name: '', quantity: '', price: '', cost: '', threshold: '' });
