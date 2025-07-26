@@ -20,7 +20,8 @@ import { X } from 'lucide-react';
 import { ImageUpload } from '@/components/ui/image-upload';
 import { useToast } from '@/hooks/use-sonner';
 
-interface Product {
+// Type for the form data (what we send to the API)
+interface ProductFormData {
   name: string;
   quantity: number;
   price: number;
@@ -28,6 +29,20 @@ interface Product {
   lowStockThreshold: number;
   tags: string[];
   imageUrl: string | null;
+}
+
+// Type for the complete product returned from API
+interface Product {
+  id: number;
+  name: string;
+  quantity: number;
+  price: number;
+  cost?: number;
+  lowStockThreshold: number;
+  tags: string[];
+  imageUrl?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface AddProductSheetProps {
@@ -67,7 +82,7 @@ const AddProductSheet: React.FC<AddProductSheetProps> = ({
     
     try {
       // Prepare product data
-      const productData: Product = {
+      const productData: ProductFormData = {
         name: formData.name,
         quantity: parseInt(formData.quantity),
         price: parseInt(formData.price),
