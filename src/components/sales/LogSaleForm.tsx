@@ -168,8 +168,6 @@ export const LogSaleForm: React.FC<LogSaleFormProps> = ({ onClose, onSubmit, pro
         throw new Error('Failed to create sale');
       }
       
-      const sale = await response.json();
-      
       // Call the parent callback with the created sale
       onSubmit({
         productId: formData.productId,
