@@ -143,7 +143,7 @@ function DraggableRow({ row }: { row: SaleRecord }) {
   );
 }
 
-const ActionDropdown = () => (
+const ActionDropdown = ({ itemId }: { itemId: number }) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button
