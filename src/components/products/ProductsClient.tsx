@@ -20,6 +20,11 @@ interface Product {
   updatedAt: Date;
 }
 
+// Type for editable product fields (excluding system fields)
+type EditableProductFields = Pick<Product, 'name' | 'quantity' | 'price' | 'lowStockThreshold' | 'tags' | 'imageUrl'> & {
+  cost?: number;
+};
+
 interface ProductsClientProps {
   initialProducts: Product[];
 }
@@ -50,7 +55,7 @@ const ProductsClient: React.FC<ProductsClientProps> = ({ initialProducts }) => {
     deleteProduct(id);
   };
 
-  const handleEditProduct = (id: number, updatedProduct: unknown) => {
+  const handleEditProduct = (id: number, updatedProduct: EditableProductFields) => {
     editProduct(id, updatedProduct);
   };
 

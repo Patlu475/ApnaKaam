@@ -48,10 +48,15 @@ interface Product {
   updatedAt: Date;
 }
 
+// Type for editable product fields (excluding system fields)
+type EditableProductFields = Pick<Product, 'name' | 'quantity' | 'price' | 'lowStockThreshold' | 'tags' | 'imageUrl'> & {
+  cost?: number;
+};
+
 interface ProductsTableProps {
   products: Product[];
   onDelete: (id: number) => void;
-  onEdit: (id: number, product: Product) => void;
+  onEdit: (id: number, product: EditableProductFields) => void;
   isLoading?: boolean;
 }
 
@@ -83,7 +88,7 @@ function DraggableRow({ product, lowStock, formatPrice, onEdit, onDelete }: {
   product: Product, 
   lowStock: boolean, 
   formatPrice: (price: number) => string,
-          onEdit: (id: number, product: Product) => void,
+          onEdit: (id: number, product: EditableProductFields) => void,
   onDelete: (id: number) => void
 }) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({

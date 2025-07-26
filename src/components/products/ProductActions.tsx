@@ -32,9 +32,14 @@ interface Product {
   updatedAt: Date;
 }
 
+// Type for editable product fields (excluding system fields)
+type EditableProductFields = Pick<Product, 'name' | 'quantity' | 'price' | 'lowStockThreshold' | 'tags' | 'imageUrl'> & {
+  cost?: number;
+};
+
 interface ProductActionsProps {
   product: Product;
-  onEdit: (id: number, product: Product) => void;
+  onEdit: (id: number, product: EditableProductFields) => void;
   onDelete: (id: number) => void;
 }
 
@@ -47,8 +52,8 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product, onEdit, onDele
     setShowDeleteDialog(false);
   };
 
-  const handleEdit = (updatedProduct: Partial<Product> & Pick<Product, 'name' | 'quantity' | 'price' | 'lowStockThreshold'>) => {
-    onEdit(product.id, updatedProduct as Product);
+  const handleEdit = (updatedProduct: EditableProductFields) => {
+    onEdit(product.id, updatedProduct);
     setShowEditDialog(false);
   };
 
