@@ -34,11 +34,16 @@ interface Product {
   updatedAt: Date;
 }
 
+// Type for editable product fields (excluding system fields)
+type EditableProductFields = Pick<Product, 'name' | 'quantity' | 'price' | 'lowStockThreshold' | 'tags' | 'imageUrl' | 'description'> & {
+  cost?: number;
+};
+
 interface EditProductDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   product: Product;
-  onEditProduct: (product: Product) => void;
+  onEditProduct: (product: EditableProductFields) => void;
 }
 
 const EditProductDialog: React.FC<EditProductDialogProps> = ({ 
