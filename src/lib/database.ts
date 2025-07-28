@@ -60,6 +60,9 @@ async function withRetry<T>(
 export const db = {
   // Product operations
   async getProducts(userId: string) {
+    if (!prisma) {
+      throw new Error('Database not configured');
+    }
     return withRetry(() =>
       prisma.product.findMany({
         where: { userId },
@@ -79,6 +82,9 @@ export const db = {
     tags: string[];
     imageUrl?: string;
   }) {
+    if (!prisma) {
+      throw new Error('Database not configured');
+    }
     return withRetry(() =>
       prisma.product.create({
         data,
@@ -96,6 +102,9 @@ export const db = {
     tags?: string[];
     imageUrl?: string;
   }) {
+    if (!prisma) {
+      throw new Error('Database not configured');
+    }
     return withRetry(() =>
       prisma.product.update({
         where: { id, userId },
@@ -105,6 +114,9 @@ export const db = {
   },
 
   async deleteProduct(id: number, userId: string) {
+    if (!prisma) {
+      throw new Error('Database not configured');
+    }
     return withRetry(() =>
       prisma.product.delete({
         where: { id, userId },
@@ -114,6 +126,9 @@ export const db = {
 
   // Sale operations
   async getSales(userId: string) {
+    if (!prisma) {
+      throw new Error('Database not configured');
+    }
     return withRetry(() =>
       prisma.sale.findMany({
         where: { userId },
@@ -130,6 +145,9 @@ export const db = {
     type: 'sale' | 'restock';
     note?: string;
   }) {
+    if (!prisma) {
+      throw new Error('Database not configured');
+    }
     return withRetry(async () => {
       // Use a transaction to ensure data consistency
       return await prisma.$transaction(async (tx) => {
@@ -155,6 +173,9 @@ export const db = {
 
   // User operations
   async getUser(userId: string) {
+    if (!prisma) {
+      throw new Error('Database not configured');
+    }
     return withRetry(() =>
       prisma.user.findUnique({
         where: { userId },
@@ -171,6 +192,9 @@ export const db = {
     email: string;
     name?: string;
   }) {
+    if (!prisma) {
+      throw new Error('Database not configured');
+    }
     return withRetry(() =>
       prisma.user.create({
         data,
@@ -180,6 +204,12 @@ export const db = {
 
   // Health check
   async healthCheck() {
+    // Check if DATABASE_URL is available
+    if (!process.env.DATABASE_URL) {
+      console.warn('DATABASE_URL not available for health check');
+      return false;
+    }
+    
     return withRetry(() => checkDatabaseConnection());
   },
 }; 
