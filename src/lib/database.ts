@@ -7,6 +7,15 @@ const RETRY_DELAY = 1000; // 1 second
 // Utility function to delay execution
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+// Type guard for error objects
+function isErrorWithCode(error: unknown): error is { code: string } {
+  return typeof error === "object" && error !== null && "code" in error;
+}
+
+function isErrorWithMessage(error: unknown): error is { message: string } {
+  return typeof error === "object" && error !== null && "message" in error;
+}
+
 // Retry wrapper for database operations
 async function withRetry<T>(
   operation: () => Promise<T>,
@@ -20,16 +29,15 @@ async function withRetry<T>(
       typeof error === "object" &&
       error !== null &&
       (
-        ("code" in error && (
-          (error as any).code === "P1001" ||
-          (error as any).code === "P1008" ||
-          (error as any).code === "P1017"
+        (isErrorWithCode(error) && (
+          error.code === "P1001" ||
+          error.code === "P1008" ||
+          error.code === "P1017"
         )) ||
-        ("message" in error &&
-          typeof (error as any).message === "string" &&
+        (isErrorWithMessage(error) &&
           (
-            (error as any).message.includes("prepared statement") ||
-            (error as any).message.includes("connection")
+            error.message.includes("prepared statement") ||
+            error.message.includes("connection")
           )
         )
       );
