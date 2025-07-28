@@ -16,12 +16,23 @@ async function withRetry<T>(
     return await operation();
   } catch (error: unknown) {
     // Check if it's a connection-related error
-    const isConnectionError = 
-      error?.code === 'P1001' || // Connection error
-      error?.code === 'P1008' || // Connection timeout
-      error?.code === 'P1017' || // Server closed the connection
-      error?.message?.includes('prepared statement') ||
-      error?.message?.includes('connection');
+    const isConnectionError =
+      typeof error === "object" &&
+      error !== null &&
+      (
+        ("code" in error && (
+          (error as any).code === "P1001" ||
+          (error as any).code === "P1008" ||
+          (error as any).code === "P1017"
+        )) ||
+        ("message" in error &&
+          typeof (error as any).message === "string" &&
+          (
+            (error as any).message.includes("prepared statement") ||
+            (error as any).message.includes("connection")
+          )
+        )
+      );
 
     if (isConnectionError && retries > 0) {
       console.warn(`Database connection error, retrying... (${retries} attempts left)`);
