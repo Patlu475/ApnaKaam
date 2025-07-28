@@ -12,12 +12,6 @@ export const prisma =
         url: process.env.DATABASE_URL,
       },
     },
-    // Add connection pooling and retry logic
-    __internal: {
-      engine: {
-        enableEngineDebugMode: process.env.NODE_ENV === 'development',
-      },
-    },
   });
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
