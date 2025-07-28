@@ -137,13 +137,14 @@ function DraggableRow({ row }: { row: SaleRecord }) {
         </div>
       </TableCell>
       <TableCell>
-        <ActionDropdown itemId={row.id} />
+        <ActionDropdown />
       </TableCell>
     </TableRow>
   );
 }
 
-const ActionDropdown = ({ itemId: _itemId }: { itemId: number }) => (
+// TODO: Implement action dropdown functionality
+const ActionDropdown = () => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button
@@ -259,7 +260,7 @@ export const SalesTable: React.FC<SalesTableProps> = ({ data: initialData }) => 
             <div key={item.id} className="bg-background border rounded-lg p-4">
               <div className="flex items-start justify-between mb-3">
                 <h3 className="font-medium">{item.productName}</h3>
-                <ActionDropdown itemId={item.id} />
+                                    <ActionDropdown />
               </div>
               
               <div className="space-y-2">
