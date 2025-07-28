@@ -2,7 +2,7 @@ import { db } from '@/lib/database';
 import { auth } from '@clerk/nextjs/server';
 import SalesClient from '@/components/sales/SalesClient';
 import { SiteHeader } from "@/components/dashboard/site-header";
-import { Product, SaleRecord } from '@/types';
+import { SaleRecord } from '@/types';
 
 export default async function SalesPage() {
   try {

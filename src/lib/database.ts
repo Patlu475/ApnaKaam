@@ -14,7 +14,7 @@ async function withRetry<T>(
 ): Promise<T> {
   try {
     return await operation();
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Check if it's a connection-related error
     const isConnectionError = 
       error?.code === 'P1001' || // Connection error
@@ -67,7 +67,16 @@ export const db = {
     );
   },
 
-  async updateProduct(id: number, userId: string, data: any) {
+  async updateProduct(id: number, userId: string, data: {
+    name?: string;
+    description?: string;
+    quantity?: number;
+    price?: number;
+    cost?: number;
+    lowStockThreshold?: number;
+    tags?: string[];
+    imageUrl?: string;
+  }) {
     return withRetry(() =>
       prisma.product.update({
         where: { id, userId },
