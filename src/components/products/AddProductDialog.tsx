@@ -11,19 +11,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { X } from 'lucide-react';
-
-interface Product {
-  name: string;
-  quantity: number;
-  price: number;
-  threshold: number;
-  tags: string[];
-}
+import { ProductFormData } from '@/types';
 
 interface AddProductDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAddProduct: (product: Product) => void;
+  onAddProduct: (product: ProductFormData) => void;
 }
 
 const AddProductDialog: React.FC<AddProductDialogProps> = ({ 
@@ -49,10 +42,13 @@ const AddProductDialog: React.FC<AddProductDialogProps> = ({
 
     onAddProduct({
       name: formData.name,
+      description: '',
       quantity: parseInt(formData.quantity),
       price: parseFloat(formData.price),
-      threshold: parseInt(formData.threshold),
+      cost: 0,
+      lowStockThreshold: parseInt(formData.threshold),
       tags: tags,
+      imageUrl: null,
     });
 
     // Reset form

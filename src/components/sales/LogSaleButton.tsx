@@ -12,7 +12,7 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { LogSaleForm } from './LogSaleForm';
-import { Product, SaleFormData, SaleRecord } from '@/types/sales';
+import { Product, SaleFormData, SaleRecord } from '@/types';
 
 interface LogSaleButtonProps {
   products?: Product[];

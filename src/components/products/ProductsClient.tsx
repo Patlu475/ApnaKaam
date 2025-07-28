@@ -6,24 +6,7 @@ import { Input } from '@/components/ui/input';
 import ProductsTable from '@/components/products/ProductsTable';
 import AddProductSheet from '@/components/products/AddProductSheet';
 import { useProductsStore } from '@/store/productsStore';
-
-interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-  cost?: number;
-  lowStockThreshold: number;
-  tags: string[];
-  imageUrl?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// Type for editable product fields (excluding system fields)
-type EditableProductFields = Pick<Product, 'name' | 'quantity' | 'price' | 'lowStockThreshold' | 'tags' | 'imageUrl'> & {
-  cost?: number;
-};
+import { Product, EditableProductFields } from '@/types';
 
 interface ProductsClientProps {
   initialProducts: Product[];

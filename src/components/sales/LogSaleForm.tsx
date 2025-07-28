@@ -10,7 +10,7 @@ import { DrawerClose, DrawerFooter } from '@/components/ui/drawer';
 import { Package, TrendingUp, Save, AlertCircle, Loader2 } from 'lucide-react';
 import { Combobox } from '@/components/ui/combobox';
 import { toast } from "sonner";
-import { Product, SaleFormData } from '@/types/sales';
+import { Product, SaleFormData } from '@/types';
 
 interface LogSaleFormProps {
   onClose: () => void;

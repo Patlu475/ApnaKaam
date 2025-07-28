@@ -20,30 +20,7 @@ import { X } from 'lucide-react';
 import { ImageUpload } from '@/components/ui/image-upload';
 import { useToast } from '@/hooks/use-sonner';
 
-// Type for the form data (what we send to the API)
-interface ProductFormData {
-  name: string;
-  quantity: number;
-  price: number;
-  cost: number;
-  lowStockThreshold: number;
-  tags: string[];
-  imageUrl: string | null;
-}
-
-// Type for the complete product returned from API
-interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-  cost?: number;
-  lowStockThreshold: number;
-  tags: string[];
-  imageUrl?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { Product, ProductFormData } from '@/types';
 
 interface AddProductSheetProps {
   open: boolean;

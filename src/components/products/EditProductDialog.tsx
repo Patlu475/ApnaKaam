@@ -20,24 +20,7 @@ import { X } from 'lucide-react';
 import { ImageUpload } from '@/components/ui/image-upload';
 import { Textarea } from '@/components/ui/textarea';
 
-interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-  cost?: number;
-  lowStockThreshold: number;
-  tags: string[];
-  imageUrl?: string | null;
-  description?: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// Type for editable product fields (excluding system fields)
-type EditableProductFields = Pick<Product, 'name' | 'quantity' | 'price' | 'lowStockThreshold' | 'tags' | 'imageUrl' | 'description'> & {
-  cost?: number;
-};
+import { Product, EditableProductFields } from '@/types';
 
 interface EditProductDialogProps {
   open: boolean;

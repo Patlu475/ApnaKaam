@@ -4,7 +4,7 @@ import { Search, Filter, Package } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertCard } from '@/components/alert/AlertCard';
-import { Alert } from '@/app/types/Alert';
+import { AlertWithProduct as Alert } from '@/types';
 import { SiteHeader } from "@/components/dashboard/site-header";
 
 const mockAlerts: Alert[] = [

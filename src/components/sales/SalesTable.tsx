@@ -37,7 +37,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { SaleRecord } from '@/types/sales';
+import { SaleRecord } from '@/types';
 
 interface SalesTableProps {
   data: SaleRecord[];
@@ -143,7 +143,7 @@ function DraggableRow({ row }: { row: SaleRecord }) {
   );
 }
 
-const ActionDropdown = ({ itemId }: { itemId: number }) => (
+const ActionDropdown = ({ itemId: _itemId }: { itemId: number }) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button

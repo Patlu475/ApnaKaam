@@ -1,11 +1,3 @@
 
-export interface Alert {
-  id: string;
-  productName: string;
-  currentQuantity: number;
-  threshold: number;
-  category: string;
-  severity: 'critical' | 'warning' | 'info';
-  lastUpdated: Date;
-  sku: string;
-}
+// Re-export types from the main types file for backward compatibility
+export type { AlertWithProduct as Alert } from '@/types';

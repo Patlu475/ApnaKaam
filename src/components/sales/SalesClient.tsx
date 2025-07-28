@@ -8,7 +8,7 @@ import { DataPagination } from '@/components/ui/data-pagination';
 import { RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSalesStore } from '@/store/salesStore';
-import { Product, SaleRecord, DateRange } from '@/types/sales';
+import { Product, SaleRecord, DateRange } from '@/types';
 
 interface SalesClientProps {
   initialProducts: Product[];

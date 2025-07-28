@@ -63,12 +63,14 @@ export function NavMain({ className }: NavMainProps) {
         <SidebarMenuItem key={item.title}>
           <SidebarMenuButton asChild>
             <Link href={item.url}>
-              <item.icon />
-              <span>{item.title}</span>
+              <div className="flex items-center gap-2">
+                <item.icon />
+                <span>{item.title}</span>
+              </div>
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
       ))}
     </SidebarMenu>
-  )
+  );
 }

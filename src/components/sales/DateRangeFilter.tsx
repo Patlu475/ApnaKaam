@@ -8,7 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { DateRange } from '@/types/sales';
+import { DateRange } from '@/types';
 
 interface DateRangeFilterProps {
   value: DateRange;

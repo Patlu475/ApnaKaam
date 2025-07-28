@@ -18,24 +18,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import EditProductDialog from '@/components/products/EditProductDialog';
-
-interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-  cost?: number;
-  lowStockThreshold: number;
-  tags: string[];
-  imageUrl?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// Type for editable product fields (excluding system fields)
-type EditableProductFields = Pick<Product, 'name' | 'quantity' | 'price' | 'lowStockThreshold' | 'tags' | 'imageUrl'> & {
-  cost?: number;
-};
+import { Product, EditableProductFields } from '@/types';
 
 interface ProductActionsProps {
   product: Product;

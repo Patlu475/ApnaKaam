@@ -33,12 +33,12 @@ export function NavDocuments({ className }: NavDocumentsProps) {
       </div>
       <SidebarMenuItem>
         <SidebarMenuButton asChild>
-          <Link href="/dashboard/products/new">
+          <Link href="/dashboard/products/new" legacyBehavior>
             <Plus className="size-4" />
             <span>New Product</span>
           </Link>
         </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }

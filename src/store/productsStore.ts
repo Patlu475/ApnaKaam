@@ -1,23 +1,11 @@
 import { create } from 'zustand';
-
-interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-  cost?: number;
-  lowStockThreshold: number;
-  tags: string[];
-  imageUrl?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { Product, EditableProductFields } from '@/types';
 
 interface ProductsStore {
   products: Product[];
   setProducts: (products: Product[]) => void;
   addProduct: (product: Product) => void;
-  editProduct: (id: number, updated: Partial<Product>) => void;
+  editProduct: (id: number, updated: EditableProductFields) => void;
   deleteProduct: (id: number) => void;
 }
 

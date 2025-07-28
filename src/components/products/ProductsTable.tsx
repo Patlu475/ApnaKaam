@@ -33,25 +33,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DataPagination } from '@/components/ui/data-pagination';
 import ProductActions from '@/components/products/ProductActions';
-import Image from 'next/image';
-
-interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-  cost?: number;
-  lowStockThreshold: number;
-  tags: string[];
-  imageUrl?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// Type for editable product fields (excluding system fields)
-type EditableProductFields = Pick<Product, 'name' | 'quantity' | 'price' | 'lowStockThreshold' | 'tags' | 'imageUrl'> & {
-  cost?: number;
-};
+import { Product, EditableProductFields } from '@/types';
 
 interface ProductsTableProps {
   products: Product[];
@@ -109,25 +91,14 @@ function DraggableRow({ product, lowStock, formatPrice, onEdit, onDelete }: {
         <DragHandle id={product.id} />
       </TableCell>
       <TableCell className="py-3">
-        <div className="flex items-center gap-3">
-          {product.imageUrl && (
-            <div className="h-10 w-10 rounded-md overflow-hidden flex-shrink-0">
-              <Image 
-                src={product.imageUrl} 
-                alt={product.name} 
-                className="h-full w-full object-cover"
-              />
-            </div>
-          )}
-          <div className="flex-1">
-            <div className="font-medium">{product.name}</div>
-            <div className="flex flex-wrap gap-1 mt-1">
-              {product.tags && product.tags.map((tag) => (
-                <Badge key={tag} variant="outline" className="text-muted-foreground px-1.5">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
+        <div className="flex-1">
+          <div className="font-medium">{product.name}</div>
+          <div className="flex flex-wrap gap-1 mt-1">
+            {product.tags && product.tags.map((tag) => (
+              <Badge key={tag} variant="outline" className="text-muted-foreground px-1.5">
+                {tag}
+              </Badge>
+            ))}
           </div>
         </div>
       </TableCell>

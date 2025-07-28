@@ -32,11 +32,7 @@ import {
 
 export const description = "An interactive area chart"
 
-interface SalesData {
-  date: string;
-  sales: number;
-  totalItems: number;
-}
+import { SalesData } from '@/types';
 
 // Sample daily sales data for demonstration
 const chartData: SalesData[] = [
